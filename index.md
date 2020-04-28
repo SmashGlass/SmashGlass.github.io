@@ -3,7 +3,7 @@ layout: home
 header:
   title: Helping improve our world one project at a time!
   text: >
-    SmashGlass, Inc. helps customers realize their full potential by investing with them to reach their goals.  
+    SmashGlass, Inc. helps many customers realize their full potential by investing with them to reach their goals.  
   action: # action button is optional
     label: Find Out More
     url: '#about'
