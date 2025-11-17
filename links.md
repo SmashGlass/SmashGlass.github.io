@@ -29,7 +29,7 @@ sections:
   section_id: help
   title: Get some help!
   text: >+
-    There is a quick reference and showscase of Markdown Syntax Here:
+    There is a quick reference and showcase of Markdown Syntax Here:
 
     * [Markdown Syntax Here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 

@@ -14,7 +14,7 @@ sections:
     section_id: about
     background_style: bg-primary
     title: A technology partner for your needs!
-    text: Smashglass,Inc privides customer solutions to enable bussineses to compete.  Our Automotive services range from Service Dealer, Estimation, Part Ordering, eCommerce, and AI.  Intregration Serrvices extend best-in-class providers to round out any offering.
+    text: SmashGlass, Inc. provides customer solutions to enable businesses to compete. Our automotive services range from Service Dealer, Estimation, Part Ordering, eCommerce, and AI. Integration Services extend best-in-class providers to round out any offering.
     actions:
       - title: Get Started!
         url: mailto:info@smashglass.com
@@ -29,7 +29,7 @@ sections:
         text: Technology solutions to help with any aspect in the automotive aftermarket.
         icon: fa-gem text-info
       - title: Custom Software
-        text: Websites, applications, or specilized solutioned for your niche project
+        text: Websites, applications, or specialized solutions for your niche project
         icon: fa-paper-plane
       - title: Integration Services
         text: We integrate to a wide range of solution providers to round out any project
