@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '../components/Analytics.astro';
 
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
@@ -56,6 +57,7 @@ const isPreview = process.env.PREVIEW === '1';
       'Legacy Modernization',
     ],
   })} />
+  <Analytics />
 </head>
 <body>
   <a href="#main" class="skip">Skip to content</a>

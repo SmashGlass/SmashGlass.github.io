@@ -1,0 +1,33 @@
+---
+/**
+ * GA4 via gtag.js.
+ *
+ * Renders only when PUBLIC_GA_ID is set at build time and this is not a
+ * preview build — so the preview deploy never pollutes the property with
+ * traffic that isn't real, and local dev stays out of the data entirely.
+ *
+ * Set the ID as a repository variable so it is not baked into the source:
+ *   gh variable set PUBLIC_GA_ID --repo SmashGlass/SmashGlass.github.io --body G-XXXXXXXXXX
+ */
+const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
+const isPreview = process.env.PREVIEW === '1';
+const enabled = Boolean(gaId) && !isPreview;
+---
+
+{enabled && (
+  <>
+    <script
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+    ></script>
+    <script is:inline define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      // anonymize_ip is the default in GA4; set explicitly so the intent is
+      // visible to anyone auditing the page.
+      gtag('config', gaId, { anonymize_ip: true });
+    </script>
+  </>
+)}
