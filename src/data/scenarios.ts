@@ -114,9 +114,9 @@ export const DOMAINS = [
   {
     n: '02', color: 'agents', title: 'AI agents and automation',
     summary:
-      'Agent frameworks built and deployed, not prototyped — agents that carry out business and ' +
-      'engineering tasks with tool access, approval gates, and run logs you can audit afterwards.',
-    work: ['Agent frameworks', 'Tool design', 'Approval gates', 'Evals', 'Run observability'],
+      'The core of the practice. Agents built and deployed, not prototyped — with tool access, ' +
+      'retrieval over your own data, approval gates, and run logs you can audit afterwards.',
+    work: ['RAG and retrieval', 'n8n workflows', 'Tool design', 'Approval gates', 'Evals', 'Run observability'],
   },
   {
     n: '03', color: 'automate', title: 'Systems integration',
@@ -131,5 +131,38 @@ export const DOMAINS = [
       'Engineering leadership experience applied to systems that still work but have become ' +
       'expensive to change — assessed, planned, and migrated without stopping delivery.',
     work: ['Architecture review', 'Incremental migration', 'Test coverage', 'Security review'],
+  },
+] as const;
+
+
+/**
+ * The shapes agent work actually takes. Kept separate from DOMAINS because
+ * agents are the core offering and the breadth is the point — a visitor should
+ * recognise their own situation in at least one of these.
+ */
+export const AGENT_TYPES = [
+  {
+    title: 'Knowledge and RAG agents',
+    text: 'Answer questions against your own documents, tickets, and systems — with citations back to the source, so an answer can be checked rather than trusted.',
+  },
+  {
+    title: 'Workflow automation',
+    text: 'n8n and custom pipelines that move work between systems on their own, instead of someone re-keying the same record into a second tool.',
+  },
+  {
+    title: 'Engineering team agents',
+    text: 'Agents that work alongside your developers: code review, test generation, issue triage, release checks, and the follow-up nobody gets to.',
+  },
+  {
+    title: 'Marketing and analytics agents',
+    text: 'Pull campaign, product, and revenue data into one place and report what actually changed this week — on a schedule, without a manual pull.',
+  },
+  {
+    title: 'In-product agents',
+    text: 'Agent features inside your own application, built for your customers to use — with the guardrails and observability a customer-facing surface needs.',
+  },
+  {
+    title: 'Internal enablement agents',
+    text: 'Agents that take routine work off your team so they can do the job you actually hired them for. Usually the fastest payback of the six.',
   },
 ] as const;

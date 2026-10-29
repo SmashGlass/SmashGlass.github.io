@@ -1,5 +1,5 @@
 ---
-import { DOMAINS } from '../data/scenarios';
+import { DOMAINS, AGENT_TYPES } from '../data/scenarios';
 ---
 <section id="work-done" class="section-rule">
   <div class="wrap">
@@ -25,6 +25,24 @@ import { DOMAINS } from '../data/scenarios';
           </ul>
         </article>
       ))}
+    </div>
+
+    <div class="agents">
+      <div class="agents-head">
+        <span class="lbl">Agents we build</span>
+        <p>
+          Most engagements start here. The shape varies a lot &mdash; these are the ones that
+          come up again and again.
+        </p>
+      </div>
+      <div class="agent-grid">
+        {AGENT_TYPES.map((a) => (
+          <div class="agent">
+            <h4>{a.title}</h4>
+            <p>{a.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
 
     <div class="engage">
@@ -80,9 +98,33 @@ import { DOMAINS } from '../data/scenarios';
     border-radius: 2px; padding: 4px 8px;
   }
 
+  .agents { margin-top: 44px; padding-top: 34px; border-top: 1px solid var(--color-rule); }
+  .agents-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; max-width: 58ch; }
+  .agents-head .lbl {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--color-agents);
+  }
+  .agents-head p { font-size: 0.95rem; color: var(--color-mute); line-height: 1.6; }
+
+  .agent-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px 30px;
+  }
+  @media (max-width: 900px) { .agent-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 580px) { .agent-grid { grid-template-columns: 1fr; gap: 20px; } }
+
+  .agent {
+    display: flex; flex-direction: column; gap: 7px;
+    padding-left: 14px; border-left: 1px solid var(--color-rule-2);
+    transition: border-color .2s;
+  }
+  .agent:hover { border-left-color: var(--color-agents); }
+  .agent h4 { font-size: 0.93rem; font-weight: 600; letter-spacing: -0.012em; }
+  .agent p { font-size: 0.83rem; color: var(--color-mute); line-height: 1.58; }
+
   .engage {
     display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 48px);
-    margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-rule);
+    margin-top: 44px; padding-top: 32px; border-top: 1px solid var(--color-rule);
   }
   @media (max-width: 760px) { .engage { grid-template-columns: 1fr; gap: 26px; } }
   .eng-col { display: flex; flex-direction: column; gap: 10px; }
