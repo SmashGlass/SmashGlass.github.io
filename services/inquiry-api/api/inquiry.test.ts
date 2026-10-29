@@ -145,6 +145,19 @@ const run = async () => {
     htmlSent.includes('&lt;script&gt;') && !htmlSent.includes('<script>')
   );
 
+  // The live form's copy uses an en-dash; the allowlist is written with a
+  // hyphen. These are the exact strings the deployed <option> values emit.
+  for (const budget of ['$1,500 \u2013 $5,000', '$5,000 \u2013 $15,000']) {
+    r = await call({ ...VALID, budget });
+    check(`accepts the form's en-dash budget ${JSON.stringify(budget)}`, r.statusCode === 200, `got ${r.statusCode}`);
+  }
+  r = await call({ ...VALID, budget: '$1,500 - $5,000' });
+  check('still accepts the hyphen form', r.statusCode === 200, `got ${r.statusCode}`);
+  r = await call({ ...VALID, budget: '  $15,000+  ' });
+  check('tolerates surrounding whitespace', r.statusCode === 200, `got ${r.statusCode}`);
+  r = await call({ ...VALID, budget: '$999,999' });
+  check('still rejects a value outside the list', r.statusCode === 400);
+
   r = await call(VALID, 'GET');
   check('rejects non-POST', r.statusCode === 405);
 

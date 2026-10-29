@@ -74,8 +74,24 @@ function validEmail(e: string): boolean {
   return /^[^\s@,;:<>()[\]\\]+@[^\s@.,;:<>()[\]\\]+(\.[^\s@.,;:<>()[\]\\]+)+$/.test(e);
 }
 
+/**
+ * Normalise before comparing against an allowlist. The form's copy uses typographic
+ * dashes (en-dash in the budget ranges); a literal === against a hyphenated constant
+ * rejects every real submission while curl tests written from the constant still pass.
+ * Match on shape, not on which dash a copy edit happened to use.
+ */
+function norm(s: string): string {
+  return s
+    .replace(/[\u2010-\u2015\u2212]/g, '-')  // hyphens, dashes, minus sign
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
 function pick<T extends readonly string[]>(value: string, allowed: T): T[number] | null {
-  return (allowed as readonly string[]).includes(value) ? (value as T[number]) : null;
+  const want = norm(value);
+  const hit = (allowed as readonly string[]).find((a) => norm(a) === want);
+  return (hit as T[number]) ?? null;
 }
 
 /* ------------------------------------------------------------------ *
