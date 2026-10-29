@@ -67,13 +67,13 @@ export const SERVICES = [
   {
     n: '01', color: 'agents', title: 'AI Agent Development',
     problem: "Work that eats hours of someone's week and follows rules you could write down — but never quite the same way twice.",
-    deliverables: ['Agent + tool integrations', 'Human approval gates', 'Eval suite & run logs', 'Deployment + handover'],
+    deliverables: ['RAG over your own data', 'In-product and internal agents', 'Human approval gates', 'Evals & run logs'],
     next: 'Scope an agent',
   },
   {
     n: '02', color: 'automate', title: 'Business Process Automation',
     problem: 'A process held together by spreadsheets, email threads, and one person who knows how it actually works.',
-    deliverables: ['Process map & failure modes', 'Automated pipeline', 'Exception handling', 'Monitoring & alerting'],
+    deliverables: ['n8n & custom pipelines', 'Marketing & analytics reporting', 'Exception handling', 'Monitoring & alerting'],
     next: 'Map a process',
   },
   {
@@ -85,7 +85,7 @@ export const SERVICES = [
   {
     n: '04', color: 'modernize', title: 'AI-Assisted Engineering',
     problem: "An application that still works but nobody wants to touch, and a team that can't afford to stop shipping to fix it.",
-    deliverables: ['Architecture assessment', 'Incremental migration plan', 'Test coverage first', 'Modernized, documented code'],
+    deliverables: ['Code review & test generation', 'Issue triage & release checks', 'Incremental migration', 'Architecture assessment'],
     next: 'Assess a system',
   },
 ] as const;
@@ -116,7 +116,10 @@ export const DOMAINS = [
     summary:
       'The core of the practice. Tool access, retrieval over your own data, approval gates, and ' +
       'run logs you can audit afterwards.',
-    work: ['RAG and retrieval', 'n8n workflows', 'Tool design', 'Approval gates', 'Evals', 'Run observability'],
+    work: [
+      'RAG and knowledge', 'Workflow automation', 'Engineering team agents',
+      'Marketing and analytics', 'In-product agents', 'Internal enablement',
+    ],
   },
   {
     n: '03', color: 'automate', title: 'Systems integration',
@@ -131,38 +134,5 @@ export const DOMAINS = [
       'Systems that still work but have become expensive to change. Assessed, planned, and ' +
       'migrated without stopping delivery.',
     work: ['Architecture review', 'Incremental migration', 'Test coverage', 'Security review'],
-  },
-] as const;
-
-
-/**
- * The shapes agent work actually takes. Kept separate from DOMAINS because
- * agents are the core offering and the breadth is the point — a visitor should
- * recognise their own situation in at least one of these.
- */
-export const AGENT_TYPES = [
-  {
-    title: 'Knowledge and RAG agents',
-    text: 'Answers from your own documents, tickets, and systems — with citations you can check.',
-  },
-  {
-    title: 'Workflow automation',
-    text: 'n8n and custom pipelines that move work between systems without anyone re-keying it.',
-  },
-  {
-    title: 'Engineering team agents',
-    text: 'Code review, test generation, issue triage, and release checks, alongside your developers.',
-  },
-  {
-    title: 'Marketing and analytics agents',
-    text: 'Campaign, product, and revenue data in one place, reporting what changed on a schedule.',
-  },
-  {
-    title: 'In-product agents',
-    text: 'Agent features inside your own product, with the guardrails a customer-facing surface needs.',
-  },
-  {
-    title: 'Internal enablement agents',
-    text: 'Routine work off your team so they can do the job you hired them for. Usually the fastest payback.',
   },
 ] as const;
