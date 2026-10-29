@@ -34,11 +34,26 @@ jobs:
         env:
           PUBLIC_FORM_ENDPOINT: ${{ vars.PUBLIC_FORM_ENDPOINT }}
           PUBLIC_BOOKING_URL: ${{ vars.PUBLIC_BOOKING_URL }}
+          PUBLIC_GA_ID: ${{ vars.PUBLIC_GA_ID }}
 
-      - name: Verify CNAME survived the build
+      - name: Verify the build picked up its configuration
+        env:
+          PUBLIC_GA_ID: ${{ vars.PUBLIC_GA_ID }}
+          PUBLIC_FORM_ENDPOINT: ${{ vars.PUBLIC_FORM_ENDPOINT }}
         run: |
           test -f dist/CNAME || { echo "::error::dist/CNAME missing — custom domain would be dropped"; exit 1; }
           echo "CNAME: $(cat dist/CNAME)"
+
+          if [ -n "$PUBLIC_GA_ID" ] && ! grep -q "$PUBLIC_GA_ID" dist/index.html; then
+            echo "::error::PUBLIC_GA_ID is set but no GA tag is in the output — analytics would silently collect nothing"
+            exit 1
+          fi
+
+          if [ -n "$PUBLIC_FORM_ENDPOINT" ] && ! grep -q "$PUBLIC_FORM_ENDPOINT" dist/index.html; then
+            echo "::error::PUBLIC_FORM_ENDPOINT is set but the form does not point at it — inquiries would fall back to mailto"
+            exit 1
+          fi
+          echo "GA tag: $([ -n "$PUBLIC_GA_ID" ] && echo present || echo 'not configured')"
 
       - uses: actions/upload-pages-artifact@v3
         with:
