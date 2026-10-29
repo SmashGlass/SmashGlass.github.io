@@ -95,5 +95,41 @@ export const PROCESS = [
   { n: '02', title: 'Architect', text: 'Decide the shape: data flow, failure modes, security boundaries, what stays manual.', who: 'HUMAN-LED' },
   { n: '03', title: 'Build', text: 'AI-assisted implementation against the agreed architecture, reviewed every step.', who: 'AI-ACCELERATED' },
   { n: '04', title: 'Validate', text: 'Tests, evals, edge cases, and a security pass before anything touches production.', who: 'AI-ACCELERATED' },
-  { n: '05', title: 'Deliver', text: 'Deployed, documented, and handed over so your team can maintain it without me.', who: 'HUMAN-LED' },
+  { n: '05', title: 'Deliver', text: 'Deployed, documented, and handed over so your team can maintain it without us.', who: 'HUMAN-LED' },
+] as const;
+
+/**
+ * Experience domains. Every claim here is drawn from work SmashGlass has
+ * actually done — no invented clients, metrics, or case studies. Add named
+ * projects here only when they are cleared for publication.
+ */
+export const DOMAINS = [
+  {
+    n: '01', color: 'integrate', title: 'Automotive aftermarket',
+    summary:
+      'The deepest domain. Dealer service workflows, estimation, parts ordering and eCommerce — ' +
+      'systems where an integration breaking quietly costs real money every day it goes unnoticed.',
+    work: ['Dealer service', 'Estimation', 'Parts ordering', 'eCommerce', 'Vendor integrations'],
+  },
+  {
+    n: '02', color: 'agents', title: 'AI agents and automation',
+    summary:
+      'Agent frameworks built and deployed, not prototyped — agents that carry out business and ' +
+      'engineering tasks with tool access, approval gates, and run logs you can audit afterwards.',
+    work: ['Agent frameworks', 'Tool design', 'Approval gates', 'Evals', 'Run observability'],
+  },
+  {
+    n: '03', color: 'automate', title: 'Systems integration',
+    summary:
+      'Connecting platforms that were never designed to talk to each other, and making the seam ' +
+      'survive bad data, rate limits, and the vendor changing their API without telling anyone.',
+    work: ['API clients', 'Webhooks', 'Data mapping', 'Reconciliation', 'Idempotent pipelines'],
+  },
+  {
+    n: '04', color: 'modernize', title: 'Architecture and modernization',
+    summary:
+      'Engineering leadership experience applied to systems that still work but have become ' +
+      'expensive to change — assessed, planned, and migrated without stopping delivery.',
+    work: ['Architecture review', 'Incremental migration', 'Test coverage', 'Security review'],
+  },
 ] as const;

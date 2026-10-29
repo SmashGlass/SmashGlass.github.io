@@ -3,7 +3,7 @@ import PrismScene from './PrismScene.astro';
 const links = [
   { href: '#build', label: 'What we build' },
   { href: '#work', label: 'How we work' },
-  { href: '#demos', label: 'Capabilities' },
+  { href: '#work-done', label: 'Experience' },
   { href: '#about', label: 'About' },
 ];
 ---
@@ -38,4 +38,13 @@ const links = [
   .nav-links a { font-size: 0.83rem; color: var(--color-mute); text-decoration: none; transition: color .16s; }
   .nav-links a:hover { color: var(--color-bone); }
   @media (max-width: 900px) { .nav-links { display: none; } }
+
+  /* Keep the CTA on one line on phones - it was wrapping and crowding the
+     wordmark at 390px. */
+  @media (max-width: 560px) {
+    .nav-in { height: 58px; gap: 12px; }
+    .nav-in .btn { white-space: nowrap; padding: 9px 13px; font-size: 0.8rem; }
+    .nav-in .btn .ar { display: none; }
+    .brand { font-size: 0.86rem; gap: 8px; }
+  }
 </style>

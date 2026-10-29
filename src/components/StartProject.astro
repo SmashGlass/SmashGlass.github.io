@@ -5,16 +5,19 @@
  * endpoint configured the form degrades to a mailto link rather than silently
  * dropping submissions.
  */
+import FractureScene from './FractureScene.astro';
+
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
 const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL ?? '';
 ---
 <section class="contact" id="start">
+  <div class="fracture-bg" aria-hidden="true"><FractureScene /></div>
   <div class="wrap ct-grid">
     <div>
       <p class="eyebrow">Start a project</p>
       <h2>Let's build something intelligent.</h2>
       <p class="intro">
-        Tell me what's slow, breaking, or not getting done. You'll get a straight answer about
+        Tell us what's slow, breaking, or not getting done. You'll get a straight answer about
         whether it's worth building and roughly what it costs &mdash; usually within a day.
       </p>
       <div class="alt">
@@ -89,7 +92,19 @@ const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL ?? '';
 </section>
 
 <style>
-  .contact { background: linear-gradient(180deg, var(--color-ink) 0%, var(--color-ink-2) 100%); }
+  .contact {
+    background: linear-gradient(180deg, var(--color-ink) 0%, var(--color-ink-2) 100%);
+    position: relative; overflow: hidden;
+  }
+  /* The pane breaks and the shards settle into a grid - the one literal
+     reading of the name, kept faint so the form stays the subject. */
+  .fracture-bg {
+    position: absolute; inset: 0; z-index: 0;
+    opacity: 0.6; pointer-events: none;
+    mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 18%, rgba(0,0,0,0.45) 58%, #000 86%);
+    -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 18%, rgba(0,0,0,0.45) 58%, #000 86%);
+  }
+  .ct-grid { position: relative; z-index: 1; }
   .ct-grid {
     display: grid; grid-template-columns: 1fr 1.1fr;
     gap: clamp(34px, 5vw, 66px); align-items: start;
@@ -184,11 +199,11 @@ const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL ?? '';
         if (!res.ok) throw new Error(String(res.status));
         form.reset();
         status.className = 'status show ok';
-        status.textContent = "Thanks — I'll come back to you within a day.";
+        status.textContent = "Thanks — we'll come back to you within a day.";
       } catch {
         status.className = 'status show err';
         status.innerHTML =
-          'That didn\'t send. Email <a href="mailto:info@smashglass.com">info@smashglass.com</a> and I\'ll pick it up there.';
+          'That didn\'t send. Email <a href="mailto:info@smashglass.com">info@smashglass.com</a> and we\'ll pick it up there.';
       } finally {
         btn.disabled = false;
       }

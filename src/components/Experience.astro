@@ -1,0 +1,94 @@
+---
+import { DOMAINS } from '../data/scenarios';
+---
+<section id="work-done" class="section-rule">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Experience</p>
+      <h2>Where we've shipped.</h2>
+      <p>
+        SmashGlass is a boutique studio, so the work is deliberately narrow. These are the
+        domains we know well enough to give you a straight answer in the first conversation.
+      </p>
+    </div>
+
+    <div class="domains">
+      {DOMAINS.map((d) => (
+        <article class="dom" style={`--c: var(--color-${d.color})`}>
+          <div class="dom-head">
+            <span class="n">{d.n}</span>
+            <h3>{d.title}</h3>
+          </div>
+          <p class="sum">{d.summary}</p>
+          <ul class="tags">
+            {d.work.map((w) => <li>{w}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <div class="engage">
+      <div class="eng-col">
+        <span class="lbl">How engagements start</span>
+        <p>
+          Most begin as a fixed-price project in the $1,500&ndash;$5,000 range &mdash; one
+          clearly bounded problem, scoped before anyone commits. That is deliberate: it is
+          the fastest way for both sides to find out whether working together is any good.
+        </p>
+      </div>
+      <div class="eng-col">
+        <span class="lbl">What you own at the end</span>
+        <p>
+          Source, tests, documentation, and deployment. No proprietary runtime, no retainer
+          required to keep it running, and nothing that stops working if you stop paying us.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .domains {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--color-rule); border: 1px solid var(--color-rule);
+    border-radius: 5px; overflow: hidden;
+  }
+  @media (max-width: 760px) { .domains { grid-template-columns: 1fr; } }
+
+  .dom {
+    background: var(--color-ink-2); padding: 28px 26px;
+    display: flex; flex-direction: column; gap: 13px; transition: background .22s;
+  }
+  .dom:hover { background: var(--color-graphite); }
+
+  .dom-head { display: flex; align-items: baseline; gap: 12px; }
+  .dom-head .n {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.14em; color: var(--c);
+  }
+  .dom-head h3 { font-size: 1.08rem; letter-spacing: -0.02em; }
+
+  .sum { font-size: 0.89rem; color: var(--color-mute); line-height: 1.6; }
+
+  .tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    list-style: none; padding: 0; margin: 4px 0 0;
+  }
+  .tags li {
+    font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.04em;
+    color: var(--color-mute-2); border: 1px solid var(--color-rule-2);
+    border-radius: 2px; padding: 4px 8px;
+  }
+
+  .engage {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 48px);
+    margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-rule);
+  }
+  @media (max-width: 760px) { .engage { grid-template-columns: 1fr; gap: 26px; } }
+  .eng-col { display: flex; flex-direction: column; gap: 10px; }
+  .eng-col .lbl {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--color-mute-2);
+  }
+  .eng-col p { font-size: 0.93rem; color: var(--color-mute); line-height: 1.62; max-width: 46ch; }
+</style>

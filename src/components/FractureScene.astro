@@ -1,0 +1,184 @@
+---
+/**
+ * Fractured glass: a dark pane breaks along clean Voronoi lines and the shards
+ * reorder into a grid rather than falling as debris. Breaking as an act of
+ * engineering — the one place the brand name gets a literal reading.
+ *
+ * Borrows the form from design direction 03 but keeps the Refraction palette,
+ * so it reads as part of the same system instead of a second identity.
+ */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+
+<canvas class={`fracture-canvas ${cls}`} aria-hidden="true"></canvas>
+
+<style>
+  .fracture-canvas { display: block; width: 100%; height: 100%; }
+</style>
+
+<script>
+  const EDGE = ['#4F7DFF', '#22D3A5', '#FFB020', '#FF5C7A'];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  interface Pt { x: number; y: number }
+  interface Cell {
+    poly: Pt[]; cx: number; cy: number;
+    gx: number; gy: number; gw: number; gh: number;
+    jx: number; jy: number; rot: number; tint: number;
+  }
+
+  function rand(i: number, k: number): number {
+    const v = Math.sin(i * 127.1 + k * 311.7) * 43758.5453;
+    return v - Math.floor(v);
+  }
+
+  /** Clip a polygon to the half-plane nearer p than q (Voronoi via bisectors). */
+  function clip(poly: Pt[], p: Pt, q: Pt): Pt[] {
+    const out: Pt[] = [];
+    const mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2;
+    const nx = q.x - p.x, ny = q.y - p.y;
+    const side = (pt: Pt) => (pt.x - mx) * nx + (pt.y - my) * ny;
+
+    for (let i = 0; i < poly.length; i++) {
+      const a = poly[i], b = poly[(i + 1) % poly.length];
+      const sa = side(a), sb = side(b);
+      if (sa <= 0) out.push(a);
+      if ((sa < 0 && sb > 0) || (sa > 0 && sb < 0)) {
+        const t = sa / (sa - sb);
+        out.push({ x: a.x + t * (b.x - a.x), y: a.y + t * (b.y - a.y) });
+      }
+    }
+    return out;
+  }
+
+  function start(cv: HTMLCanvasElement) {
+    const ctx = cv.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0, h = 0, cells: Cell[] = [], t0 = 0;
+    const CYCLE = 9;
+
+    const size = () => {
+      const r = cv.getBoundingClientRect();
+      cv.width = Math.max(1, Math.round(r.width * dpr));
+      cv.height = Math.max(1, Math.round(r.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      w = r.width; h = r.height;
+    };
+
+    function build(seed: number) {
+      const N = 20, GC = 5, GR = 3;
+      const seeds: Pt[] = [];
+      for (let i = 0; i < N; i++) seeds.push({ x: rand(i + seed, 1), y: rand(i + seed, 2) });
+
+      cells = [];
+      for (let k = 0; k < N; k++) {
+        let poly: Pt[] = [
+          { x: -0.15, y: -0.15 }, { x: 1.15, y: -0.15 },
+          { x: 1.15, y: 1.15 }, { x: -0.15, y: 1.15 },
+        ];
+        for (let m = 0; m < N; m++) if (m !== k) poly = clip(poly, seeds[k], seeds[m]);
+        if (poly.length < 3) continue;
+
+        let cx = 0, cy = 0;
+        for (const p of poly) { cx += p.x; cy += p.y; }
+        cx /= poly.length; cy /= poly.length;
+
+        const gi = k % (GC * GR), gc = gi % GC, gr = Math.floor(gi / GC);
+        cells.push({
+          poly, cx, cy,
+          gx: 0.04 + ((gc + 0.5) / GC) * 0.92,
+          gy: 0.08 + ((gr + 0.5) / GR) * 0.84,
+          gw: (0.92 / GC) * 0.9,
+          gh: (0.84 / GR) * 0.86,
+          jx: rand(k, 7) - 0.5,
+          jy: rand(k, 8) - 0.5,
+          rot: (rand(k, 9) - 0.5) * 0.45,
+          tint: Math.floor(rand(k, 11) * EDGE.length),
+        });
+      }
+    }
+
+    function draw(now: number) {
+      if (!w || !h) return;
+      const el = reduce ? 0.82 : ((now - t0) % CYCLE) / CYCLE;
+
+      // 0-.14 intact | .14-.44 break outward | .44-.80 settle into grid | .80-1 hold
+      let burst = 0, grid = 0;
+      if (el < 0.14) { burst = 0; grid = 0; }
+      else if (el < 0.44) { const u = (el - 0.14) / 0.3; burst = 1 - Math.pow(1 - u, 3); }
+      else if (el < 0.8) {
+        const v = (el - 0.44) / 0.36;
+        const ev = v < 0.5 ? 2 * v * v : 1 - Math.pow(-2 * v + 2, 2) / 2;
+        burst = 1 - ev; grid = ev;
+      } else { grid = 1; }
+
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i < cells.length; i++) {
+        const c = cells[i];
+        const ox = c.jx * burst * 0.26, oy = c.jy * burst * 0.26;
+
+        ctx.save();
+        ctx.translate(w * (c.cx + ox), h * (c.cy + oy));
+        ctx.rotate(c.rot * burst);
+        ctx.beginPath();
+
+        for (let k = 0; k < c.poly.length; k++) {
+          const vx = c.poly[k].x - c.cx, vy = c.poly[k].y - c.cy;
+          let px: number, py: number;
+          if (grid > 0.01) {
+            // Blend each shard outline toward a rectangular card in the grid.
+            const rx = (vx > 0 ? 1 : -1) * (c.gw / 2);
+            const ry = (vy > 0 ? 1 : -1) * (c.gh / 2);
+            const bx = vx + (rx - vx) * grid;
+            const by = vy + (ry - vy) * grid;
+            px = w * bx + w * (c.gx - c.cx) * grid - w * ox;
+            py = h * by + h * (c.gy - c.cy) * grid - h * oy;
+          } else {
+            px = w * vx; py = h * vy;
+          }
+          k === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+
+        ctx.fillStyle = `rgba(22,25,32,${0.42 + rand(i, 3) * 0.30})`;
+        ctx.fill();
+
+        const heat = Math.max(burst, grid * 0.3);
+        ctx.strokeStyle = EDGE[c.tint] + Math.round((0.16 + heat * 0.62) * 255).toString(16).padStart(2, '0');
+        ctx.lineWidth = 0.7 + heat * 0.7;
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    size();
+    build(0);
+    window.addEventListener('resize', size);
+    cv.parentElement?.addEventListener('click', () => {
+      t0 = performance.now() / 1000;
+      build(Math.floor(t0 * 13) % 97);
+    });
+
+    const visible = () => {
+      const r = cv.getBoundingClientRect();
+      return r.bottom > -200 && r.top < window.innerHeight + 200;
+    };
+
+    if (reduce) {
+      setTimeout(() => draw(0), 60);
+    } else {
+      t0 = performance.now() / 1000;
+      const loop = (now: number) => {
+        if (visible()) draw(now / 1000);
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
+    }
+  }
+
+  document.querySelectorAll<HTMLCanvasElement>('.fracture-canvas').forEach(start);
+</script>
