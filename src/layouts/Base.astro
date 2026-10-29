@@ -3,8 +3,12 @@ import '../styles/global.css';
 
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/og.png', Astro.site).href;
+const ogImage = new URL(`${base}/og.png`, Astro.site).href;
+// Astro only exposes PUBLIC_* on import.meta.env; frontmatter runs at build
+// time, so read process.env directly.
+const isPreview = process.env.PREVIEW === '1';
 ---
 <!doctype html>
 <html lang="en">
@@ -14,8 +18,9 @@ const ogImage = new URL('/og.png', Astro.site).href;
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
   <meta name="theme-color" content="#07080B" />
+  {isPreview && <meta name="robots" content="noindex, nofollow" />}
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="SmashGlass" />
@@ -40,7 +45,7 @@ const ogImage = new URL('/og.png', Astro.site).href;
     '@type': 'ProfessionalService',
     name: 'SmashGlass, Inc.',
     description,
-    url: 'https://smashglass.com',
+    url: 'https://www.smashglass.com',
     email: 'info@smashglass.com',
     telephone: '+1-512-797-9101',
     areaServed: 'US',

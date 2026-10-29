@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:preview": "PREVIEW=1 astro build && node scripts/strip-preview.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },
