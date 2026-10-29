@@ -7,8 +7,8 @@ import { DOMAINS, AGENT_TYPES } from '../data/scenarios';
       <p class="eyebrow">Experience</p>
       <h2>Where we've shipped.</h2>
       <p>
-        SmashGlass is a boutique studio, so the work is deliberately narrow. These are the
-        domains we know well enough to give you a straight answer in the first conversation.
+        Deliberately narrow. These are the domains we know well enough to answer straight in the
+        first conversation.
       </p>
     </div>
 
@@ -30,10 +30,7 @@ import { DOMAINS, AGENT_TYPES } from '../data/scenarios';
     <div class="agents">
       <div class="agents-head">
         <span class="lbl">Agents we build</span>
-        <p>
-          Most engagements start here. The shape varies a lot &mdash; these are the ones that
-          come up again and again.
-        </p>
+        <p>Most engagements start here.</p>
       </div>
       <div class="agent-grid">
         {AGENT_TYPES.map((a) => (
@@ -45,22 +42,12 @@ import { DOMAINS, AGENT_TYPES } from '../data/scenarios';
       </div>
     </div>
 
-    <div class="engage">
-      <div class="eng-col">
-        <span class="lbl">How engagements start</span>
-        <p>
-          Most begin as a fixed-price project in the $1,500&ndash;$5,000 range &mdash; one
-          clearly bounded problem, scoped before anyone commits. That is deliberate: it is
-          the fastest way for both sides to find out whether working together is any good.
-        </p>
-      </div>
-      <div class="eng-col">
-        <span class="lbl">What you own at the end</span>
-        <p>
-          Source, tests, documentation, and deployment. No proprietary runtime, no retainer
-          required to keep it running, and nothing that stops working if you stop paying us.
-        </p>
-      </div>
+    <div class="owns">
+      <span class="lbl">What you own at the end</span>
+      <p>
+        Source, tests, documentation, and deployment. No proprietary runtime, no retainer
+        required to keep it running.
+      </p>
     </div>
   </div>
 </section>
@@ -122,15 +109,20 @@ import { DOMAINS, AGENT_TYPES } from '../data/scenarios';
   .agent h4 { font-size: 0.93rem; font-weight: 600; letter-spacing: -0.012em; }
   .agent p { font-size: 0.83rem; color: var(--color-mute); line-height: 1.58; }
 
-  .engage {
-    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 48px);
-    margin-top: 44px; padding-top: 32px; border-top: 1px solid var(--color-rule);
+  /* A single full-width statement instead of a two-column block: the page
+     needed one moment that is not another grid of small grey text. */
+  .owns {
+    margin-top: 44px; padding-top: 30px; border-top: 1px solid var(--color-rule);
+    display: flex; flex-direction: column; gap: 12px;
   }
-  @media (max-width: 760px) { .engage { grid-template-columns: 1fr; gap: 26px; } }
-  .eng-col { display: flex; flex-direction: column; gap: 10px; }
-  .eng-col .lbl {
+  .owns .lbl {
     font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--color-mute-2);
   }
-  .eng-col p { font-size: 0.93rem; color: var(--color-mute); line-height: 1.62; max-width: 46ch; }
+  .owns p {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+    line-height: 1.45; letter-spacing: -0.015em;
+    color: var(--color-bone); max-width: 30ch;
+  }
 </style>

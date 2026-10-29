@@ -1,11 +1,20 @@
 ---
+/**
+ * Deliberately short. Everything this section used to argue in prose — fixed
+ * price, no agency, AI speed vs human judgement — is already stated once each
+ * in the strip, the process section, and Experience. Repeating it here is what
+ * made the page read as wordy.
+ *
+ * Laid out as a full-width list rather than the prose-left / list-right pattern
+ * the other sections use, so the page stops having the same shape seven times.
+ */
 const values = [
-  ['01', 'Executive-level technical judgment', 'Architecture and trade-off decisions made by someone accountable for them before.'],
+  ['01', 'Executive-level technical judgment', 'Architecture calls made by someone who has owned the outcome.'],
   ['02', 'Hands-on delivery', 'The engineer who scopes your project is the one who writes it.'],
-  ['03', 'Production engineering experience', 'Systems that run unattended, recover from failure, and can be maintained by your team.'],
-  ['04', 'AI agent architecture', 'Tool design, approval gates, evals, and run observability — not a prompt in a loop.'],
-  ['05', 'Reliability, testing, security', 'Test coverage and a security pass are in scope, not an upsell.'],
-  ['06', 'Direct collaboration', 'One channel, no account layer, straight answers about what’s hard.'],
+  ['03', 'Production engineering', 'Systems that run unattended and recover from failure.'],
+  ['04', 'AI agent architecture', 'Tool design, approval gates, evals, run observability.'],
+  ['05', 'Reliability and security', 'Test coverage and a security pass are in scope, not an upsell.'],
+  ['06', 'Direct collaboration', 'One channel. Straight answers about what is hard.'],
 ];
 ---
 <section id="about" class="section-rule">
@@ -13,59 +22,36 @@ const values = [
     <div class="sec-head">
       <p class="eyebrow">Why SmashGlass</p>
       <h2>A studio built around senior judgement.</h2>
+      <p>No bench, no junior team, and no account layer between you and the people writing your software.</p>
     </div>
 
-    <div class="about-grid">
-      <div class="prose">
-        <p>
-          SmashGlass is a boutique engineering studio, not an agency. There is no bench, no junior
-          team, and no account layer between you and the people writing your software. The engineer
-          who scopes the work is the engineer who builds it.
-        </p>
-        <p>
-          We pair executive-level architecture experience with AI-assisted delivery. That
-          combination is the whole proposition: AI makes implementation fast enough to quote a
-          fixed price, and senior judgement decides what gets built, where the security boundary
-          goes, and which integration will quietly break under load.
-        </p>
-        <p>
-          Our background is engineering leadership and hands-on delivery in production systems
-          &mdash; automotive aftermarket platforms, systems integration, and modernization work
-          where being wrong is expensive. We take on projects where that experience is the point.
-        </p>
-      </div>
-
-      <dl class="vals">
-        {values.map(([i, t, s]) => (
-          <div class="val">
-            <span class="i">{i}</span>
-            <div>
-              <dt class="t">{t}</dt>
-              <dd class="s">{s}</dd>
-            </div>
+    <dl class="vals">
+      {values.map(([i, t, s]) => (
+        <div class="val">
+          <span class="i">{i}</span>
+          <div>
+            <dt class="t">{t}</dt>
+            <dd class="s">{s}</dd>
           </div>
-        ))}
-      </dl>
-    </div>
+        </div>
+      ))}
+    </dl>
   </div>
 </section>
 
 <style>
-  .about-grid {
+  .vals {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: clamp(30px, 5vw, 60px); align-items: start;
+    gap: 0 clamp(30px, 5vw, 64px);
+    margin: 0; border-top: 1px solid var(--color-rule);
   }
-  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+  @media (max-width: 720px) { .vals { grid-template-columns: 1fr; } }
 
-  .prose { display: flex; flex-direction: column; gap: 18px; }
-  .prose p { color: var(--color-mute); line-height: 1.65; }
-
-  .vals { display: flex; flex-direction: column; border-top: 1px solid var(--color-rule); margin: 0; }
   .val {
     display: grid; grid-template-columns: 26px 1fr; gap: 14px;
-    padding: 15px 0; border-bottom: 1px solid var(--color-rule); align-items: start;
+    padding: 16px 0; border-bottom: 1px solid var(--color-rule); align-items: start;
   }
   .val .i { font-family: var(--font-mono); font-size: 0.64rem; color: var(--color-mute-2); padding-top: 2px; }
-  .val .t { font-family: var(--font-display); font-size: 0.92rem; color: var(--color-bone); font-weight: 500; }
-  .val .s { font-size: 0.82rem; color: var(--color-mute); line-height: 1.5; margin: 3px 0 0; }
+  .val .t { font-family: var(--font-display); font-size: 0.93rem; color: var(--color-bone); font-weight: 500; }
+  .val .s { font-size: 0.83rem; color: var(--color-mute); line-height: 1.5; margin: 3px 0 0; }
 </style>

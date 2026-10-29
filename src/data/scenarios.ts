@@ -107,29 +107,29 @@ export const DOMAINS = [
   {
     n: '01', color: 'integrate', title: 'Automotive aftermarket',
     summary:
-      'The deepest domain. Dealer service workflows, estimation, parts ordering and eCommerce — ' +
-      'systems where an integration breaking quietly costs real money every day it goes unnoticed.',
+      'The deepest domain. Dealer service, estimation, parts ordering and eCommerce — where a ' +
+      'quiet integration failure costs money every day it goes unnoticed.',
     work: ['Dealer service', 'Estimation', 'Parts ordering', 'eCommerce', 'Vendor integrations'],
   },
   {
     n: '02', color: 'agents', title: 'AI agents and automation',
     summary:
-      'The core of the practice. Agents built and deployed, not prototyped — with tool access, ' +
-      'retrieval over your own data, approval gates, and run logs you can audit afterwards.',
+      'The core of the practice. Tool access, retrieval over your own data, approval gates, and ' +
+      'run logs you can audit afterwards.',
     work: ['RAG and retrieval', 'n8n workflows', 'Tool design', 'Approval gates', 'Evals', 'Run observability'],
   },
   {
     n: '03', color: 'automate', title: 'Systems integration',
     summary:
-      'Connecting platforms that were never designed to talk to each other, and making the seam ' +
-      'survive bad data, rate limits, and the vendor changing their API without telling anyone.',
+      'Connecting platforms never designed to talk to each other, and making the seam survive bad ' +
+      'data, rate limits, and silent API changes.',
     work: ['API clients', 'Webhooks', 'Data mapping', 'Reconciliation', 'Idempotent pipelines'],
   },
   {
     n: '04', color: 'modernize', title: 'Architecture and modernization',
     summary:
-      'Engineering leadership experience applied to systems that still work but have become ' +
-      'expensive to change — assessed, planned, and migrated without stopping delivery.',
+      'Systems that still work but have become expensive to change. Assessed, planned, and ' +
+      'migrated without stopping delivery.',
     work: ['Architecture review', 'Incremental migration', 'Test coverage', 'Security review'],
   },
 ] as const;
@@ -143,26 +143,26 @@ export const DOMAINS = [
 export const AGENT_TYPES = [
   {
     title: 'Knowledge and RAG agents',
-    text: 'Answer questions against your own documents, tickets, and systems — with citations back to the source, so an answer can be checked rather than trusted.',
+    text: 'Answers from your own documents, tickets, and systems — with citations you can check.',
   },
   {
     title: 'Workflow automation',
-    text: 'n8n and custom pipelines that move work between systems on their own, instead of someone re-keying the same record into a second tool.',
+    text: 'n8n and custom pipelines that move work between systems without anyone re-keying it.',
   },
   {
     title: 'Engineering team agents',
-    text: 'Agents that work alongside your developers: code review, test generation, issue triage, release checks, and the follow-up nobody gets to.',
+    text: 'Code review, test generation, issue triage, and release checks, alongside your developers.',
   },
   {
     title: 'Marketing and analytics agents',
-    text: 'Pull campaign, product, and revenue data into one place and report what actually changed this week — on a schedule, without a manual pull.',
+    text: 'Campaign, product, and revenue data in one place, reporting what changed on a schedule.',
   },
   {
     title: 'In-product agents',
-    text: 'Agent features inside your own application, built for your customers to use — with the guardrails and observability a customer-facing surface needs.',
+    text: 'Agent features inside your own product, with the guardrails a customer-facing surface needs.',
   },
   {
     title: 'Internal enablement agents',
-    text: 'Agents that take routine work off your team so they can do the job you actually hired them for. Usually the fastest payback of the six.',
+    text: 'Routine work off your team so they can do the job you hired them for. Usually the fastest payback.',
   },
 ] as const;
