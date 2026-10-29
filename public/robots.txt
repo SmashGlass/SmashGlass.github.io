@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.smashglass.com/sitemap-index.xml

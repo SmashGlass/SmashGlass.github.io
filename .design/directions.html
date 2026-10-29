@@ -1,0 +1,1050 @@
+<title>SmashGlass Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Spline+Sans+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Archivo:wdth,wght@125,700&family=JetBrains+Mono:wght@400&family=IBM+Plex+Mono:wght@400&display=swap">
+
+<style>
+:root{
+  --paper:#EDF0EC; --paper-2:#E4E9E4; --paper-3:#DCE3DC;
+  --ink:#0F1411; --ink-70:#3C463F; --ink-50:#6B766E; --ink-30:#9AA69D;
+  --rule:#CBD4CC; --rule-soft:#DDE4DD;
+  --accent:#1B5E4A; --accent-ink:#F3F7F4; --accent-soft:#D6E5DD;
+  --panel:#07090B; --panel-2:#0D1014; --panel-ink:#E9EEEA; --panel-ink-50:#7F8A85; --panel-rule:#1C2128;
+  --shadow:0 1px 2px rgba(15,20,17,.06), 0 18px 44px -20px rgba(15,20,17,.30);
+  --maxw:1120px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C100E; --paper-2:#121714; --paper-3:#18201B;
+    --ink:#E6EBE6; --ink-70:#B4BEB7; --ink-50:#8A958C; --ink-30:#616B64;
+    --rule:#252D28; --rule-soft:#1B221D;
+    --accent:#6ECFA8; --accent-ink:#06120D; --accent-soft:#15291F;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 18px 44px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C100E; --paper-2:#121714; --paper-3:#18201B;
+  --ink:#E6EBE6; --ink-70:#B4BEB7; --ink-50:#8A958C; --ink-30:#616B64;
+  --rule:#252D28; --rule-soft:#1B221D;
+  --accent:#6ECFA8; --accent-ink:#06120D; --accent-soft:#15291F;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 18px 44px -20px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size:17px; line-height:1.62; font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px}
+@media (max-width:640px){ .wrap{padding:0 20px} body{font-size:16px} }
+
+h1,h2,h3,h4{font-family:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif; font-weight:600; text-wrap:balance; margin:0; letter-spacing:-.018em}
+h1{font-size:clamp(2.6rem,6.2vw,4.3rem); line-height:1.02; font-weight:800; letter-spacing:-.035em}
+h2{font-size:clamp(1.7rem,3.2vw,2.3rem); line-height:1.1; letter-spacing:-.025em}
+h3{font-size:clamp(1.25rem,2.1vw,1.5rem); line-height:1.18}
+h4{font-size:.95rem; line-height:1.3}
+p{margin:0}
+a{color:inherit}
+.mono{font-family:"Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace}
+
+.lbl{
+  font-family:"Spline Sans Mono", ui-monospace, Menlo, monospace;
+  font-size:.665rem; letter-spacing:.17em; text-transform:uppercase;
+  color:var(--ink-50); font-weight:500;
+}
+.lede{font-size:clamp(1.08rem,1.7vw,1.26rem); line-height:1.55; color:var(--ink-70); max-width:62ch}
+.body-col{max-width:66ch; display:flex; flex-direction:column; gap:1.05em}
+.body-col p{color:var(--ink-70)}
+.body-col strong{color:var(--ink); font-weight:600}
+
+/* ---------- masthead ---------- */
+.mast{padding:clamp(56px,9vw,104px) 0 clamp(40px,6vw,64px); border-bottom:1px solid var(--rule)}
+.mast-top{display:flex; gap:16px; align-items:baseline; justify-content:space-between; flex-wrap:wrap; margin-bottom:clamp(40px,7vw,76px)}
+.wordmark{font-family:"Bricolage Grotesque",sans-serif; font-weight:800; font-size:.95rem; letter-spacing:-.02em}
+.wordmark span{color:var(--accent)}
+.mast h1{margin-bottom:.5em}
+.mast .lede{margin-bottom:2.4em}
+.meta-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:22px 28px;
+  padding-top:22px; border-top:1px solid var(--rule-soft);
+}
+.meta-grid div{display:flex; flex-direction:column; gap:5px}
+.meta-grid .v{font-size:.92rem; color:var(--ink); line-height:1.4}
+
+/* ---------- generic section ---------- */
+section{padding:clamp(56px,8vw,96px) 0; border-bottom:1px solid var(--rule)}
+.sec-head{display:grid; grid-template-columns:116px 1fr; gap:34px; align-items:start; margin-bottom:clamp(32px,4.5vw,48px)}
+@media (max-width:760px){ .sec-head{grid-template-columns:1fr; gap:12px} }
+.sec-head h2{margin-bottom:.45em}
+.sec-head .lbl{padding-top:.7em}
+@media (max-width:760px){ .sec-head .lbl{padding-top:0} }
+
+/* ---------- audit table ---------- */
+.audit{margin-top:40px; display:flex; flex-direction:column; gap:0; border-top:1px solid var(--ink)}
+.row{
+  display:grid; grid-template-columns:94px 1fr 1.35fr; gap:26px;
+  padding:18px 0; border-bottom:1px solid var(--rule-soft); align-items:start;
+}
+@media (max-width:760px){ .row{grid-template-columns:1fr; gap:7px; padding:16px 0} }
+.tag{
+  font-family:"Spline Sans Mono",monospace; font-size:.63rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:3px 8px; border-radius:2px; display:inline-block; justify-self:start; font-weight:500; margin-top:3px;
+}
+.tag.cut{background:#C2412E; color:#fff}
+.tag.fix{background:var(--paper-3); color:var(--ink-70); border:1px solid var(--rule)}
+.tag.keep{background:var(--accent); color:var(--accent-ink)}
+.row .what{font-weight:600; color:var(--ink); font-size:.98rem; line-height:1.4}
+.row .why{color:var(--ink-70); font-size:.94rem; line-height:1.5}
+.row code{font-family:"Spline Sans Mono",monospace; font-size:.85em; background:var(--paper-3); padding:1px 5px; border-radius:2px}
+
+.flag{
+  margin-top:40px; padding:24px 26px; background:var(--paper-2);
+  border-left:3px solid #C2412E; display:flex; flex-direction:column; gap:10px;
+}
+.flag .lbl{color:#C2412E}
+.flag p{font-size:.98rem; color:var(--ink-70); max-width:68ch}
+
+/* ---------- directions ---------- */
+.dir{padding-top:clamp(56px,8vw,88px)}
+.dir-head{display:flex; align-items:baseline; gap:18px; flex-wrap:wrap; margin-bottom:14px}
+.dir-num{
+  font-family:"Bricolage Grotesque",sans-serif; font-weight:800; font-size:clamp(2.6rem,7vw,4rem);
+  line-height:.8; color:var(--rule); letter-spacing:-.05em;
+}
+.dir-name{font-family:"Bricolage Grotesque",sans-serif; font-weight:800; font-size:clamp(1.9rem,4.6vw,3rem); letter-spacing:-.035em; line-height:1}
+.dir-tag{font-size:1.02rem; color:var(--ink-50); font-style:italic; margin-bottom:34px; max-width:56ch}
+
+.panel{
+  position:relative; background:var(--panel); border-radius:3px; overflow:hidden;
+  box-shadow:var(--shadow); margin-bottom:12px;
+}
+.panel canvas{display:block; width:100%; height:100%}
+.panel-hint{
+  position:absolute; left:16px; bottom:13px; z-index:2;
+  font-family:"Spline Sans Mono",monospace; font-size:.6rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--panel-ink-50);
+}
+.panel-copy{position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:center; padding:clamp(24px,4.5vw,56px); pointer-events:none}
+.panel-copy .eyebrow{font-family:"Spline Sans Mono",monospace; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:var(--panel-ink-50); margin-bottom:18px}
+.panel-copy .hl{color:var(--panel-ink); max-width:17ch; margin-bottom:16px}
+.panel-copy .sub{color:#9FAAA4; font-family:Inter,sans-serif; font-size:clamp(.8rem,1.3vw,.95rem); line-height:1.55; max-width:40ch; margin-bottom:24px}
+.panel-copy .ctas{display:flex; gap:10px; flex-wrap:wrap}
+.panel-copy .cta{font-family:Inter,sans-serif; font-size:.76rem; font-weight:500; padding:9px 16px; border-radius:2px}
+.cap{font-size:.86rem; color:var(--ink-50); margin-bottom:40px; line-height:1.5}
+
+.dir-grid{display:grid; grid-template-columns:1.25fr 1fr; gap:clamp(30px,5vw,60px); align-items:start}
+@media (max-width:860px){ .dir-grid{grid-template-columns:1fr; gap:38px} }
+
+.spec{display:flex; flex-direction:column; gap:30px}
+.spec-block{display:flex; flex-direction:column; gap:12px}
+.swatches{display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:7px}
+.sw{display:flex; flex-direction:column; gap:6px}
+.sw .chip{height:46px; border-radius:2px; border:1px solid rgba(128,128,128,.22)}
+.sw .hex{font-family:"Spline Sans Mono",monospace; font-size:.6rem; color:var(--ink-50); letter-spacing:.02em}
+.sw .nm{font-family:"Spline Sans Mono",monospace; font-size:.58rem; color:var(--ink-30); text-transform:uppercase; letter-spacing:.1em}
+
+.typeset{display:flex; flex-direction:column; gap:14px; padding:20px 22px; background:var(--paper-2); border-radius:3px}
+.ts-row{display:flex; flex-direction:column; gap:3px}
+.ts-meta{font-family:"Spline Sans Mono",monospace; font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-30)}
+.ts-spec{color:var(--ink); line-height:1.1}
+
+.notes{display:flex; flex-direction:column; gap:18px}
+.note{display:grid; grid-template-columns:76px 1fr; gap:18px; align-items:start}
+@media (max-width:520px){ .note{grid-template-columns:1fr; gap:4px} }
+.note .lbl{padding-top:.25em}
+.note p{font-size:.95rem; color:var(--ink-70); line-height:1.55}
+
+.tradeoff{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:34px; padding-top:26px; border-top:1px solid var(--rule)}
+@media (max-width:620px){ .tradeoff{grid-template-columns:1fr; gap:22px} }
+.tradeoff div{display:flex; flex-direction:column; gap:9px}
+.tradeoff p{font-size:.93rem; line-height:1.55; color:var(--ink-70)}
+.tradeoff .lbl.good{color:var(--accent)}
+.tradeoff .lbl.bad{color:#C2412E}
+
+/* ---------- recommendation ---------- */
+.rec{background:var(--paper-2); border:none}
+.rec-card{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,56px); align-items:start}
+@media (max-width:820px){ .rec-card{grid-template-columns:1fr; gap:30px} }
+.pick{display:flex; align-items:baseline; gap:14px; margin-bottom:18px}
+.pick .n{font-family:"Bricolage Grotesque",sans-serif; font-weight:800; font-size:3.4rem; line-height:.8; color:var(--accent); letter-spacing:-.05em}
+.pick .t{font-family:"Bricolage Grotesque",sans-serif; font-weight:800; font-size:2rem; letter-spacing:-.03em; line-height:1}
+
+/* ---------- stack ---------- */
+.stack{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:36px}
+.st{background:var(--paper); padding:22px 20px; display:flex; flex-direction:column; gap:8px}
+.st .nm{font-family:"Bricolage Grotesque",sans-serif; font-weight:600; font-size:1.02rem}
+.st p{font-size:.89rem; color:var(--ink-70); line-height:1.5}
+.st .lbl{font-size:.6rem}
+
+.blockers{display:flex; flex-direction:column; gap:14px; margin-top:38px}
+.bl{display:grid; grid-template-columns:28px 1fr; gap:14px; align-items:start; padding:16px 18px; background:var(--paper-2); border-radius:3px}
+.bl .n{font-family:"Spline Sans Mono",monospace; font-size:.72rem; color:var(--accent); padding-top:2px; font-weight:500}
+.bl p{font-size:.94rem; color:var(--ink-70); line-height:1.55}
+.bl strong{color:var(--ink); font-weight:600}
+.bl code{font-family:"Spline Sans Mono",monospace; font-size:.84em; background:var(--paper-3); padding:1px 5px; border-radius:2px}
+
+/* ---------- close ---------- */
+.close{border-bottom:none; padding-bottom:clamp(70px,10vw,120px)}
+.asks{display:flex; flex-direction:column; gap:0; margin-top:34px; border-top:1px solid var(--ink)}
+.ask{display:grid; grid-template-columns:30px 1fr; gap:16px; padding:17px 0; border-bottom:1px solid var(--rule-soft); align-items:start}
+.ask .n{font-family:"Spline Sans Mono",monospace; font-size:.68rem; color:var(--ink-30); padding-top:4px}
+.ask p{font-size:.99rem; color:var(--ink-70); line-height:1.55}
+.ask strong{color:var(--ink); font-weight:600}
+
+.flag.crit{border-left-color:#C2412E; background:var(--paper-3)}
+.flag .sev{font-family:"Spline Sans Mono",monospace; font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; background:#C2412E; color:#fff; padding:3px 8px; border-radius:2px; align-self:flex-start}
+.flag .fix-line{font-family:"Spline Sans Mono",monospace; font-size:.8rem; color:var(--ink); background:var(--paper); padding:10px 12px; border-radius:2px; border:1px solid var(--rule); overflow-x:auto; white-space:nowrap}
+
+/* reference-site callout */
+.ref{display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,4vw,48px); align-items:start; margin-top:34px}
+@media (max-width:820px){ .ref{grid-template-columns:1fr; gap:28px} }
+.ref-box{padding:22px 24px; background:var(--paper-2); border-radius:3px; display:flex; flex-direction:column; gap:12px}
+.ref-box ul{margin:0; padding-left:1.1em; display:flex; flex-direction:column; gap:7px}
+.ref-box li{font-size:.94rem; color:var(--ink-70); line-height:1.5}
+.ref-box li strong{color:var(--ink); font-weight:600}
+
+/* direction 04 console */
+.run{position:absolute; inset:0; display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(18px,3vw,38px); padding:clamp(20px,3.4vw,44px); z-index:2}
+@media (max-width:760px){ .run{grid-template-columns:1fr; gap:14px} .run .run-left{display:none} }
+.run-left{display:flex; flex-direction:column; justify-content:center}
+.run-left .eyebrow{font-family:"Spline Sans Mono",monospace; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:#6B7A74; margin-bottom:16px}
+.run-left h3{font-family:"Instrument Sans",sans-serif; font-weight:600; color:#EDF1EE; font-size:clamp(1.3rem,2.5vw,2.05rem); letter-spacing:-.025em; line-height:1.08; margin-bottom:14px}
+.run-left p{font-family:Inter,sans-serif; font-size:clamp(.74rem,1.1vw,.86rem); color:#93A09A; line-height:1.55; margin-bottom:20px; max-width:34ch}
+.run-left .ctas{display:flex; gap:9px; flex-wrap:wrap}
+.run-left .cta{font-family:Inter,sans-serif; font-size:.72rem; font-weight:500; padding:8px 14px; border-radius:2px}
+.run-con{background:#15181D; border:1px solid #242A31; border-radius:4px; display:flex; flex-direction:column; overflow:hidden; min-height:0}
+.run-bar{display:flex; align-items:center; gap:8px; padding:9px 12px; border-bottom:1px solid #242A31; flex:0 0 auto}
+.run-bar .dot{width:7px; height:7px; border-radius:50%; background:#3FB68B}
+.run-bar .nm{font-family:"Spline Sans Mono",monospace; font-size:.59rem; letter-spacing:.13em; text-transform:uppercase; color:#6B7A74}
+.run-task{padding:11px 13px; border-bottom:1px solid #242A31; font-family:Inter,sans-serif; font-size:.73rem; line-height:1.45; color:#C7D0CB; flex:0 0 auto}
+.run-task span{color:#6B7A74; font-family:"Spline Sans Mono",monospace; font-size:.62rem; letter-spacing:.1em; display:block; margin-bottom:5px}
+.run-steps{padding:11px 13px; display:flex; flex-direction:column; gap:7px; overflow:hidden; flex:1 1 auto}
+.run-step{display:grid; grid-template-columns:62px 1fr; gap:9px; align-items:start; opacity:0; transform:translateY(5px); transition:opacity .34s ease, transform .34s ease}
+.run-step.on{opacity:1; transform:none}
+.run-step .k{font-family:"Spline Sans Mono",monospace; font-size:.55rem; letter-spacing:.1em; text-transform:uppercase; padding:2px 5px; border-radius:2px; text-align:center; margin-top:1px}
+.run-step .v{font-family:"Spline Sans Mono",monospace; font-size:.665rem; line-height:1.5; color:#A8B3AD}
+.run-step .v b{color:#DDE4E0; font-weight:400}
+.k.plan{background:rgba(91,141,239,.16); color:#8FB2F5}
+.k.tool{background:rgba(255,255,255,.07); color:#7E8A84}
+.k.step{background:rgba(255,255,255,.07); color:#7E8A84}
+.k.hold{background:rgba(224,163,62,.18); color:#E0A33E}
+.k.done{background:rgba(63,182,139,.18); color:#4FC79A}
+.run-step.hold .v{color:#E0A33E}
+.run-step.done .v{color:#6FD2AC}
+.caret{display:inline-block; width:6px; height:11px; background:#4FC79A; vertical-align:-1px; margin-left:3px; animation:bl 1s step-end infinite}
+@keyframes bl{50%{opacity:0}}
+
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} .run-step{opacity:1 !important; transform:none !important} }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="mast-top">
+    <div class="wordmark">SMASH<span>GLASS</span></div>
+    <div class="lbl">Phase A &amp; B &middot; 28 Oct 2026</div>
+  </div>
+  <h1>Three ways to build SmashGlass.</h1>
+  <p class="lede">An audit of what's live at smashglass.com today, and four visual directions for the rebuild — each with a working motion study, a real palette, and an honest account of what it costs you. Two things in the audit need fixing this week regardless of which direction you pick.</p>
+  <div class="meta-grid">
+    <div><span class="lbl">Repository</span><span class="v mono">SmashGlass/SmashGlass.github.io</span></div>
+    <div><span class="lbl">Live stack</span><span class="v">Jekyll + Bootstrap 4, legacy Pages build</span></div>
+    <div><span class="lbl">Positioning</span><span class="v">Senior-led boutique AI engineering studio</span></div>
+    <div><span class="lbl">Next step</span><span class="v">Fix www cert &rarr; pick a direction &rarr; mockups</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head">
+    <div class="lbl">Phase A</div>
+    <div>
+      <h2>What's live today, and what it's costing you.</h2>
+      <p class="lede">The site runs the Start Bootstrap "Creative" theme on Jekyll. It's not broken — it's generic, and in two places it actively undermines you.</p>
+    </div>
+  </div>
+
+  <div class="flag crit" style="margin-top:0; margin-bottom:40px">
+    <span class="sev">Critical &middot; costing you traffic right now</span>
+    <div class="lbl" style="color:var(--ink)">https://www.smashglass.com throws a browser security warning</div>
+    <p>Your brief refers to the site as <strong>www.smashglass.com</strong>, which is almost certainly the URL on your Upwork profile, your LinkedIn, and your email signature. That address is served over a GitHub wildcard certificate for <span class="mono">*.github.io</span>, which does not cover your domain. Every visitor who uses it gets a full-page red interstitial — <span class="mono">ERR_CERT_COMMON_NAME_INVALID</span> — before they see a single word you wrote. Most of them leave there.</p>
+    <p>Only the bare apex, <span class="mono">smashglass.com</span>, has a valid certificate. The cause is that your <code>CNAME</code> file names the apex only, so GitHub never provisioned a certificate for the <span class="mono">www</span> host, even though DNS points <span class="mono">www</span> at Pages.</p>
+    <div class="fix-line">Fix: set the Pages custom domain to www.smashglass.com &rarr; GitHub provisions both certs and redirects apex &rarr; www</div>
+    <p style="font-size:.9rem">Roughly five minutes, and it is worth more than every other recommendation in this document combined.</p>
+  </div>
+
+  <div class="body-col">
+    <p>The headline is <strong>"Helping improve our world one project at a time!"</strong> — a sentiment, not a position. A founder landing here from Upwork learns nothing about what you do in the first five seconds. The body copy underneath commits hard to the automotive aftermarket (Service Dealer, Estimation, Part Ordering), which is a real credential but a narrow one, and it contradicts the AI-agent studio you're trying to sell.</p>
+    <p>The three service cards — Automotive, Custom Software, Integration Services — describe categories, not problems. There is no process, no point of view, no evidence of engineering judgment. The only call to action is a bare <code>mailto:</code>, which is the highest-friction conversion path available and gives you zero qualification data.</p>
+  </div>
+
+  <div class="audit">
+    <div class="row"><span class="tag keep">Keep</span><span class="what">Domain, CNAME, HTTPS, Pages setup</span><span class="why">Custom domain is verified, cert approved through Jan 2027, HTTPS enforced. Nothing to do here.</span></div>
+    <div class="row"><span class="tag keep">Keep</span><span class="what">Static hosting on GitHub Pages</span><span class="why">Right call for this site. Free, fast, no server to babysit. The build method changes; the hosting doesn't.</span></div>
+    <div class="row"><span class="tag keep">Keep</span><span class="what">info@smashglass.com and the Austin phone number</span><span class="why">Real contact details. They stay, but as a fallback behind a proper inquiry form.</span></div>
+    <div class="row"><span class="tag fix">Fix</span><span class="what">No certificate for the <code>www</code> host</span><span class="why">Highest-impact item on the list. See the note above — <code>www.smashglass.com</code> is unreachable without a security warning.</span></div>
+    <div class="row"><span class="tag fix">Fix</span><span class="what">No apex &harr; www redirect</span><span class="why">Two addresses, one of which is broken, and no canonical. Splits whatever SEO signal you have.</span></div>
+    <div class="row"><span class="tag cut">Cut</span><span class="what"><code>links.md</code> in its entirety</span><span class="why">See below. This is the single most damaging thing on the site.</span></div>
+    <div class="row"><span class="tag cut">Cut</span><span class="what">Stock team photos, <code>person1–7.jpg</code></span><span class="why">Commented out but still in the repo. A boutique studio with seven stock-photo "members" reads as a template nobody finished.</span></div>
+    <div class="row"><span class="tag cut">Cut</span><span class="what">jQuery 3.4.1, Bootstrap 4.4.1, Popper, Magnific Popup</span><span class="why">Four CDN dependencies for a brochure site. Every one is a render-blocking request and a third-party trust boundary.</span></div>
+    <div class="row"><span class="tag cut">Cut</span><span class="what">Automotive-only framing in the hero and about copy</span><span class="why">Demote to a credential — "shipped production systems in automotive aftermarket" — rather than the whole identity.</span></div>
+    <div class="row"><span class="tag fix">Fix</span><span class="what">Empty <code>description:</code> in <code>_config.yml</code></span><span class="why"><code>jekyll-seo-tag</code> is installed and has nothing to work with. There is no meta description, no OG image, no Twitter card. You are invisible in link previews.</span></div>
+    <div class="row"><span class="tag fix">Fix</span><span class="what">Copyright reads 2020</span><span class="why">Six years stale. Reads abandoned to anyone checking whether you're still in business.</span></div>
+    <div class="row"><span class="tag fix">Fix</span><span class="what">No favicon, no OG image, no analytics</span><span class="why">You can't tell whether anyone is arriving, from where, or what they do when they land.</span></div>
+    <div class="row"><span class="tag fix">Fix</span><span class="what">Exclamation marks in every heading</span><span class="why">"At Your Service", "Let's Get In Touch!", "Get Started!" — enthusiastic where you want assured. A CTO reads confidence in restraint.</span></div>
+  </div>
+
+  <div class="flag">
+    <div class="lbl">Also fix today, regardless of what we build</div>
+    <p>The <strong>Links</strong> page in your top nav is unedited template boilerplate. It is publicly live and it contains: a Markdown syntax cheat sheet, "Lorem ipsum dolor sit amet", placeholder phone numbers <span class="mono">+1 (202) 555-014</span>, and an embedded Google Map pointing at the <strong>Marlborough District Court in Massachusetts</strong> — an address that is not yours and that contradicts the Austin phone number on your homepage.</p>
+    <p>Any prospect who clicks that nav item learns that nobody finished the website. Deleting <code>links.md</code> and its menu entry is a two-minute change and it is worth more than anything else in this document.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="lbl">Reference check</div>
+    <div>
+      <h2>simon.ai isn't the site you remember — and that's useful.</h2>
+      <p class="lede">Your brief describes it as cinematic animated backgrounds with depth and dimensionality. I pulled the page. It's something else, and what it actually is points somewhere better for you.</p>
+    </div>
+  </div>
+
+  <div class="body-col">
+    <p>Simon AI is an agentic marketing platform, and the site is a <strong>Webflow build running GSAP and Rive</strong> — no Three.js, no WebGL, no 3D scene anywhere on the page. The motion that reads as expensive is Rive vector animation of <em>product UI</em>, sequenced with GSAP. It's a clean, confident B2B SaaS page, not a cinematic experience.</p>
+    <p>The hero is not a symbol. It's a chat prompt — "What can I help you with today?" — with an animated cursor and suggested actions, i.e. <strong>the product doing the job you'd hire it for.</strong> Below that: a live email preview being shaped by customer data, a breakdown of data signals, three platform components, then logos and testimonials.</p>
+    <p>So two things follow. First, the Webflow runtime you ruled out is exactly what's producing that polish, which means copying the <em>feel</em> isn't the goal — the underlying move is. Second, and more importantly: <strong>the thing that converts on that page is legibility, not spectacle.</strong> A visitor understands what they'd be buying in about four seconds, because they're watching it work.</p>
+    <p>Much of their page is carried by customer logos and testimonials — which you've correctly ruled out, since you don't have publishable ones yet. That makes the demonstration carry <em>more</em> weight for you than it does for them, not less. It's the only proof you have.</p>
+  </div>
+
+  <div class="ref">
+    <div class="ref-box">
+      <span class="lbl">What I'd take from it</span>
+      <ul>
+        <li><strong>Show the work, don't symbolize it.</strong> A hero that demonstrates an agent running beats a beautiful abstract object for a buyer deciding whether to send money.</li>
+        <li><strong>Motion serves the demo.</strong> Every animation on their page explains something. None of it is ambient.</li>
+        <li><strong>Restraint reads as expensive.</strong> Generous whitespace, tight type, one accent.</li>
+      </ul>
+    </div>
+    <div class="ref-box">
+      <span class="lbl">What I'd leave</span>
+      <ul>
+        <li><strong>The logo carousel and testimonial wall.</strong> You have none, and fabricating them is off the table.</li>
+        <li><strong>The Webflow runtime.</strong> You ruled it out, correctly — it's a hosting dependency you don't need.</li>
+        <li><strong>The generic SaaS gradient sections.</strong> This is where their page is weakest and where you can clearly beat it.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="body-col" style="margin-top:34px">
+    <p>Directions 01&ndash;03 below are the cinematic options your brief asked for, and they're real — I'd build any of them. <strong>Direction 04 is the one this reference check actually points at</strong>, and you should read it before you choose.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="lbl">The spine</div>
+    <div>
+      <h2>The name is the asset you aren't using.</h2>
+    </div>
+  </div>
+  <div class="body-col">
+    <p>Every direction below is built on the same observation: <strong>"SmashGlass" is a better brand than the site gives it credit for.</strong> The current design could belong to any consultancy; swap the wordmark and nothing changes. That's the actual failure.</p>
+    <p>Glass is unusually generous as a visual system. It <strong>refracts</strong> — one undifferentiated input enters, ordered outputs leave, which is a literal picture of "transforming complexity into clarity." It is a <strong>barrier</strong> — the pane between a business and the system it wishes it had. It is a <strong>lattice</strong> — a material that is rigid because of how its components are bonded. And it <strong>breaks</strong>, which is the verb in your name and the thing you do to problems.</p>
+    <p>Three directions, three readings of the same material. All dark-first, all built on the same four service lines, all deliverable on GitHub Pages. They diverge on what the central 3D object <em>means</em> — and that choice sets the tone of the entire brand.</p>
+  </div>
+</section>
+
+<section class="dir">
+  <div class="dir-head"><span class="dir-num">01</span><span class="dir-name">Refraction</span></div>
+  <p class="dir-tag">Glass as a lens, not a barrier. One beam in, an ordered spectrum out.</p>
+
+  <div class="panel" style="aspect-ratio:16/9; min-height:300px">
+    <canvas id="cv1" aria-label="Motion study: a white beam of light enters a slowly rotating glass prism and leaves as four separate colored rays, one per service line."></canvas>
+    <div class="panel-copy">
+      <div class="eyebrow">Hero concept A</div>
+      <h2 class="hl" style="font-family:'Instrument Serif',Georgia,serif; font-weight:400; font-size:clamp(1.9rem,4.4vw,3.4rem); letter-spacing:-.01em; line-height:1.04">Complexity in.<br>Clarity out.</h2>
+      <p class="sub">SmashGlass designs and builds AI agents, business automations, and custom software — architected by a hands-on engineering leader, shipped with AI-assisted delivery.</p>
+      <div class="ctas">
+        <span class="cta" style="background:#4F7DFF; color:#fff">Discuss your project</span>
+        <span class="cta" style="border:1px solid #2A3038; color:#C9D1CC">Explore our work</span>
+      </div>
+    </div>
+    <div class="panel-hint">Move your pointer across the panel &rarr; the light source follows</div>
+  </div>
+  <p class="cap">Live motion study. The four exit rays are not decorative — each one terminates at one of the four service lines, so the hero graphic <em>is</em> the services diagram.</p>
+
+  <div class="dir-grid">
+    <div class="notes">
+      <div class="body-col" style="margin-bottom:26px">
+        <p>A faceted glass monolith holds the center of the screen, rotating slowly under a single light source. White light enters one face and leaves the other as four separated rays — <strong>AI agents, automation, integrations, modernization</strong>. The dispersion is the thesis: you take the undifferentiated mess a client arrives with and return four clean, named outputs.</p>
+        <p>Chrome stays monochrome throughout. The spectrum colors appear only inside the 3D scene and in diagram elements, never on buttons or body text, so the page reads as a serious engineering document with one controlled moment of beauty in it.</p>
+      </div>
+      <div class="note"><span class="lbl">3D scene</span><p>R3F with <code>MeshTransmissionMaterial</code>, real IOR and chromatic dispersion on the edges. Volumetric exit rays drawn as additive quads. Pointer position drives the light vector; scroll drives the prism's rotation and the ray spread.</p></div>
+      <div class="note"><span class="lbl">Motion</span><p>Rays resolve into the service grid as you scroll past the hero — the same four colors become the four card accents. Sections cross-fade through a subtle chromatic shift rather than a plain opacity dissolve.</p></div>
+      <div class="note"><span class="lbl">Mobile</span><p>Transmission is far too expensive on phones. Mobile gets a pre-rendered video loop or the Direction 02 point-cloud renderer with the same spectrum palette — identical story, 5% of the GPU cost.</p></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <span class="lbl">Palette</span>
+        <div class="swatches">
+          <div class="sw"><div class="chip" style="background:#07080B"></div><span class="hex">#07080B</span><span class="nm">Ink</span></div>
+          <div class="sw"><div class="chip" style="background:#14161C"></div><span class="hex">#14161C</span><span class="nm">Graphite</span></div>
+          <div class="sw"><div class="chip" style="background:#EDEEF2"></div><span class="hex">#EDEEF2</span><span class="nm">Bone</span></div>
+          <div class="sw"><div class="chip" style="background:#4F7DFF"></div><span class="hex">#4F7DFF</span><span class="nm">Agents</span></div>
+          <div class="sw"><div class="chip" style="background:#22D3A5"></div><span class="hex">#22D3A5</span><span class="nm">Automate</span></div>
+          <div class="sw"><div class="chip" style="background:#FFB020"></div><span class="hex">#FFB020</span><span class="nm">Integrate</span></div>
+          <div class="sw"><div class="chip" style="background:#FF5C7A"></div><span class="hex">#FF5C7A</span><span class="nm">Modernize</span></div>
+        </div>
+      </div>
+      <div class="spec-block">
+        <span class="lbl">Typography</span>
+        <div class="typeset">
+          <div class="ts-row"><span class="ts-meta">Display — Instrument Serif</span><span class="ts-spec" style="font-family:'Instrument Serif',Georgia,serif; font-size:1.95rem">Complexity in. Clarity out.</span></div>
+          <div class="ts-row"><span class="ts-meta">Body — Inter</span><span class="ts-spec" style="font-family:Inter,sans-serif; font-size:.96rem; line-height:1.5; font-weight:400">We design and build AI agents, business automations, and custom software.</span></div>
+          <div class="ts-row"><span class="ts-meta">Data — JetBrains Mono</span><span class="ts-spec" style="font-family:'JetBrains Mono',monospace; font-size:.82rem">DISCOVER / ARCHITECT / BUILD</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tradeoff">
+    <div><span class="lbl good">Works because</span><p>It is the only direction where the visual is also the information architecture — one beam, four services, no arbitrary decoration. The editorial serif separates you from every Inter-on-black AI startup, and real-time dispersion is genuinely hard to fake, which signals capability before a word is read.</p></div>
+    <div><span class="lbl bad">Costs you</span><p>Transmission materials are the most expensive thing you can put on a GPU, so the mobile fallback isn't optional — it's a second build. And a serif display leans editorial; it reads "studio" more than "systems engineer," which cuts against the credibility you want with a CTO.</p></div>
+  </div>
+</section>
+
+<section class="dir">
+  <div class="dir-head"><span class="dir-num">02</span><span class="dir-name">Lattice</span></div>
+  <p class="dir-tag">Glass as structure. Scattered components condense into something load-bearing as you scroll.</p>
+
+  <div class="panel" style="aspect-ratio:16/9; min-height:300px">
+    <canvas id="cv2" aria-label="Motion study: a drifting cloud of nodes condenses into a structured truss with signal pulses travelling along its edges as the page scrolls."></canvas>
+    <div class="panel-copy">
+      <div class="eyebrow">Hero concept B</div>
+      <h2 class="hl" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(1.8rem,4.2vw,3.2rem); letter-spacing:-.03em; line-height:1.05">Software that<br>holds together.</h2>
+      <p class="sub">AI agents, automations, and integrations — architected by someone who has run engineering organizations and still writes the code that ships.</p>
+      <div class="ctas">
+        <span class="cta" style="background:#F59E0B; color:#120C02">Discuss your project</span>
+        <span class="cta" style="border:1px solid #243049; color:#C3CBD9">Explore our work</span>
+      </div>
+    </div>
+    <div class="panel-hint">Scroll this panel through the viewport &rarr; the structure assembles</div>
+  </div>
+  <p class="cap">Live motion study, driven by this panel's scroll position. One persistent scene spans the entire page: the background <em>is</em> the narrative.</p>
+
+  <div class="dir-grid">
+    <div class="notes">
+      <div class="body-col" style="margin-bottom:26px">
+        <p>There is no separate hero scene. A single field of nodes lives behind the whole page, and scroll position drives one uniform. At the top it's an unstructured drift — the client's current state. By the process section it has snapped onto a rigid truss with signal pulses running its edges. By the contact section it has resolved into a legible architecture diagram.</p>
+        <p>This is the most direct reading of your brief: nodes, signals, modules and agent workflows assembling into a coherent structure. It also solves the scroll-transition requirement for free, because the transitions <em>are</em> the scene.</p>
+      </div>
+      <div class="note"><span class="lbl">3D scene</span><p>Instanced points and line segments — tens of thousands of nodes at negligible cost, no transmission, no post-processing. Each node carries a chaos position and a lattice position; one shader uniform interpolates between them.</p></div>
+      <div class="note"><span class="lbl">Motion</span><p>Everything hangs off scroll progress, so there is no ambient animation competing with the copy. Amber is reserved exclusively for CTAs, so every conversion point is the only warm thing on a cool screen.</p></div>
+      <div class="note"><span class="lbl">Mobile</span><p>Runs natively at full fidelity — reduce the node count and drop the edge pulses. This is the only direction with no separate mobile build.</p></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <span class="lbl">Palette</span>
+        <div class="swatches">
+          <div class="sw"><div class="chip" style="background:#060810"></div><span class="hex">#060810</span><span class="nm">Void</span></div>
+          <div class="sw"><div class="chip" style="background:#0F1420"></div><span class="hex">#0F1420</span><span class="nm">Slate</span></div>
+          <div class="sw"><div class="chip" style="background:#E8ECF4"></div><span class="hex">#E8ECF4</span><span class="nm">Paper</span></div>
+          <div class="sw"><div class="chip" style="background:#38BDF8"></div><span class="hex">#38BDF8</span><span class="nm">Signal</span></div>
+          <div class="sw"><div class="chip" style="background:#6366F1"></div><span class="hex">#6366F1</span><span class="nm">Node</span></div>
+          <div class="sw"><div class="chip" style="background:#F59E0B"></div><span class="hex">#F59E0B</span><span class="nm">CTA only</span></div>
+        </div>
+      </div>
+      <div class="spec-block">
+        <span class="lbl">Typography</span>
+        <div class="typeset">
+          <div class="ts-row"><span class="ts-meta">Display — Space Grotesk</span><span class="ts-spec" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.7rem; letter-spacing:-.03em">Software that holds together.</span></div>
+          <div class="ts-row"><span class="ts-meta">Body — Inter</span><span class="ts-spec" style="font-family:Inter,sans-serif; font-size:.96rem; line-height:1.5">Discover, architect, build, validate, deliver.</span></div>
+          <div class="ts-row"><span class="ts-meta">Data — IBM Plex Mono</span><span class="ts-spec" style="font-family:'IBM Plex Mono',monospace; font-size:.82rem">agent.run() &rarr; 04 integrations</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tradeoff">
+    <div><span class="lbl good">Works because</span><p>Cheapest to run, best mobile story, strongest accessibility profile, and the scroll narrative gives you interactive storytelling without a single gratuitous animation. It's also the safest commercial bet — it reads unambiguously as "engineering," which is what a CTO evaluating you wants to see.</p></div>
+    <div><span class="lbl bad">Costs you</span><p>Connected-node particle fields are the single most common visual on AI company websites. Without a specific payoff it risks looking like everyone else — the mitigation is that the lattice must resolve into a <em>real, readable</em> architecture diagram, not an abstract blob. It's also the least connected to your name.</p></div>
+  </div>
+</section>
+
+<section class="dir">
+  <div class="dir-head"><span class="dir-num">03</span><span class="dir-name">Fracture</span></div>
+  <p class="dir-tag">Glass as the barrier. It breaks on cue — and the shards reassemble into the page's layout grid.</p>
+
+  <div class="panel" style="aspect-ratio:16/9; min-height:300px">
+    <canvas id="cv3" aria-label="Motion study: a dark pane of glass fractures along clean lines, and instead of falling, the shards reorder themselves into a layout grid."></canvas>
+    <div class="panel-copy">
+      <div class="eyebrow">Hero concept C</div>
+      <h2 class="hl" style="font-family:Archivo,sans-serif; font-weight:700; font-stretch:125%; font-size:clamp(1.7rem,4vw,3rem); letter-spacing:-.025em; line-height:1.02; text-transform:uppercase">Break what's<br>blocking you.</h2>
+      <p class="sub">The AI agents and custom software your business has been working around for years. Built properly, shipped fast.</p>
+      <div class="ctas">
+        <span class="cta" style="background:#FF2D78; color:#fff">Discuss your project</span>
+        <span class="cta" style="border:1px solid #30343F; color:#C8CBD4">Explore our work</span>
+      </div>
+    </div>
+    <div class="panel-hint">Click the panel to re-break it</div>
+  </div>
+  <p class="cap">Live motion study. The shards don't fall like debris — they re-order into the layout grid, then persist as the faceted panels behind every section below.</p>
+
+  <div class="dir-grid">
+    <div class="notes">
+      <div class="body-col" style="margin-bottom:26px">
+        <p>The page opens as a single unbroken pane of dark glass — a barrier, edge-lit. On first scroll it fractures along clean Voronoi lines, and then the thing that makes it work: <strong>the shards don't fall.</strong> They re-order themselves into the site's layout grid, and stay there as the faceted surfaces behind every section for the rest of the page.</p>
+        <p>Breaking as an act of engineering rather than destruction. It is by far the most memorable of the three, and the only one a visitor would describe to someone else afterwards.</p>
+      </div>
+      <div class="note"><span class="lbl">3D scene</span><p>Voronoi shatter on a plane, computed once at load. Shards use a cheap screen-space distortion rather than real refraction, so it costs a fraction of Direction 01 while reading as glass.</p></div>
+      <div class="note"><span class="lbl">Motion</span><p>One orchestrated moment, then quiet. After the break, motion is limited to edge-light shifting with cursor position and shards parallaxing gently on scroll. The restraint afterwards is what keeps the opening from feeling like a gimmick.</p></div>
+      <div class="note"><span class="lbl">Mobile</span><p>Shatter plays as a shorter, lower-shard-count sequence. Under <code>prefers-reduced-motion</code> the page simply opens post-break — already assembled, no animation, no content loss.</p></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <span class="lbl">Palette</span>
+        <div class="swatches">
+          <div class="sw"><div class="chip" style="background:#08090C"></div><span class="hex">#08090C</span><span class="nm">Obsidian</span></div>
+          <div class="sw"><div class="chip" style="background:#1A1D26"></div><span class="hex">#1A1D26</span><span class="nm">Shard</span></div>
+          <div class="sw"><div class="chip" style="background:#F2F3F7"></div><span class="hex">#F2F3F7</span><span class="nm">Light</span></div>
+          <div class="sw"><div class="chip" style="background:#FF2D78"></div><span class="hex">#FF2D78</span><span class="nm">Edge hot</span></div>
+          <div class="sw"><div class="chip" style="background:#7C3AED"></div><span class="hex">#7C3AED</span><span class="nm">Edge cool</span></div>
+        </div>
+      </div>
+      <div class="spec-block">
+        <span class="lbl">Typography</span>
+        <div class="typeset">
+          <div class="ts-row"><span class="ts-meta">Display — Archivo Expanded</span><span class="ts-spec" style="font-family:Archivo,sans-serif; font-weight:700; font-stretch:125%; font-size:1.5rem; text-transform:uppercase; letter-spacing:-.02em">Break what's blocking you</span></div>
+          <div class="ts-row"><span class="ts-meta">Body — Inter</span><span class="ts-spec" style="font-family:Inter,sans-serif; font-size:.96rem; line-height:1.5">Built properly, shipped fast.</span></div>
+          <div class="ts-row"><span class="ts-meta">Data — JetBrains Mono</span><span class="ts-spec" style="font-family:'JetBrains Mono',monospace; font-size:.82rem">01 / 02 / 03 / 04</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tradeoff">
+    <div><span class="lbl good">Works because</span><p>Perfect name-to-visual fit, and the most ownable of the three — nobody else can use it. Highest recall by a wide margin, and the shards-become-grid payoff is a genuinely clever piece of design that rewards the one person you most want to impress.</p></div>
+    <div><span class="lbl bad">Costs you</span><p>The aggression reads consumer-startup, not "trusted senior engineer for your legacy modernization" — and hot magenta fights the credibility goal directly. A shatter on load is also a one-trick moment that gets tiresome on a second visit, and risks reading as destruction to a client whose actual fear is you breaking their production system.</p></div>
+  </div>
+</section>
+
+<section class="dir">
+  <div class="dir-head"><span class="dir-num">04</span><span class="dir-name">Run</span></div>
+  <p class="dir-tag">No metaphor. The hero is an agent doing a real job, start to finish, in twelve seconds.</p>
+
+  <div class="panel" style="aspect-ratio:16/9; min-height:330px">
+    <div class="run">
+      <div class="run-left">
+        <div class="eyebrow">Hero concept D</div>
+        <h3>From plain English to production software.</h3>
+        <p>SmashGlass builds AI agents and automations that do real operational work &mdash; designed, reviewed, and shipped by a hands-on engineering leader.</p>
+        <div class="ctas">
+          <span class="cta" style="background:#3FB68B; color:#06130E">Discuss your project</span>
+          <span class="cta" style="border:1px solid #2A3139; color:#AEB8B3">See how it works</span>
+        </div>
+      </div>
+      <div class="run-con">
+        <div class="run-bar"><span class="dot"></span><span class="nm">agent &middot; parts-reconciliation</span></div>
+        <div class="run-task"><span>Task from the client, in their words</span>Reconcile yesterday's parts orders against supplier invoices and flag any mismatch over $50.</div>
+        <div class="run-steps" id="run4"></div>
+      </div>
+    </div>
+    <div class="panel-hint">Live &mdash; the run loops</div>
+  </div>
+  <p class="cap">Live demonstration, built from real DOM text rather than a canvas &mdash; so it's selectable, screen-reader legible, and costs almost nothing to ship. Note the amber <span class="mono">HOLD</span> step: the human approval gate is the frame, not a footnote.</p>
+
+  <div class="dir-grid">
+    <div class="notes">
+      <div class="body-col" style="margin-bottom:26px">
+        <p>The hero shows an agent receiving a task in plain business English, planning it, calling tools, hitting real APIs, pausing for human approval, and reporting a result. A founder watching it for ten seconds understands exactly what they would be buying &mdash; which is the single hardest thing to communicate about AI agent work, and the thing the other three directions ask them to infer.</p>
+        <p>It also does double duty. The same component, with three swapped scripts, <em>is</em> your Featured Capabilities section: a business-ops agent, an AI-assisted engineering workflow, an integration pipeline. One component, two sections, nothing invented &mdash; each is labeled as a demonstration, not a case study.</p>
+        <p>And it quietly uses your automotive background as evidence of range rather than as your whole identity, which is the positioning problem the current site has.</p>
+      </div>
+      <div class="note"><span class="lbl">Build</span><p>DOM and SVG with a small orchestration layer. <strong>No Three.js at all.</strong> Ships in single-digit kilobytes, runs identically on a phone, and the copy is in the initial HTML where crawlers can read it.</p></div>
+      <div class="note"><span class="lbl">Motion</span><p>One orchestrated twelve-second sequence, then it loops. Step reveals, a caret on the active line, and a deliberate beat on the approval gate. Nothing ambient competes with it.</p></div>
+      <div class="note"><span class="lbl">Accessibility</span><p>The strongest of the four by a distance. It's real text, so it's selectable and announced correctly. Under <code>prefers-reduced-motion</code> the run renders complete and static &mdash; no information is lost, because the information was never in the animation.</p></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <span class="lbl">Palette</span>
+        <div class="swatches">
+          <div class="sw"><div class="chip" style="background:#0B0D10"></div><span class="hex">#0B0D10</span><span class="nm">Ground</span></div>
+          <div class="sw"><div class="chip" style="background:#15181D"></div><span class="hex">#15181D</span><span class="nm">Surface</span></div>
+          <div class="sw"><div class="chip" style="background:#EDF1EE"></div><span class="hex">#EDF1EE</span><span class="nm">Text</span></div>
+          <div class="sw"><div class="chip" style="background:#5B8DEF"></div><span class="hex">#5B8DEF</span><span class="nm">Plan</span></div>
+          <div class="sw"><div class="chip" style="background:#E0A33E"></div><span class="hex">#E0A33E</span><span class="nm">Human gate</span></div>
+          <div class="sw"><div class="chip" style="background:#3FB68B"></div><span class="hex">#3FB68B</span><span class="nm">Shipped</span></div>
+        </div>
+      </div>
+      <div class="spec-block">
+        <span class="lbl">Typography</span>
+        <div class="typeset">
+          <div class="ts-row"><span class="ts-meta">Display &mdash; Instrument Sans</span><span class="ts-spec" style="font-family:'Instrument Sans',sans-serif; font-weight:600; font-size:1.5rem; letter-spacing:-.025em">From plain English to production software.</span></div>
+          <div class="ts-row"><span class="ts-meta">Body &mdash; Inter</span><span class="ts-spec" style="font-family:Inter,sans-serif; font-size:.96rem; line-height:1.5">Designed, reviewed, and shipped by a hands-on engineering leader.</span></div>
+          <div class="ts-row"><span class="ts-meta">Console &mdash; Spline Sans Mono</span><span class="ts-spec" style="font-family:'Spline Sans Mono',monospace; font-size:.8rem">HOLD &middot; awaiting approval</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tradeoff">
+    <div><span class="lbl good">Works because</span><p>It answers the only question the buyer actually has. It's the cheapest to build, the fastest to load, the best on mobile, and the most accessible. Building a convincing agent-run visualization is itself a demonstration of the skill you're selling &mdash; the medium is the evidence. And it gives you a capabilities section without a single invented claim.</p></div>
+    <div><span class="lbl bad">Costs you</span><p>It is not cinematic, and it does not use your name. On its own it reads as a competent dev-tool landing page rather than a studio with a point of view &mdash; closer to a template than any of the other three. It needs a visual identity wrapped around it, which is exactly what the recommendation below does.</p></div>
+  </div>
+</section>
+
+<section class="rec">
+  <div class="sec-head">
+    <div class="lbl">Recommendation</div>
+    <div><h2>Build 04's hero. Dress it in 01's identity.</h2></div>
+  </div>
+  <div class="rec-card">
+    <div>
+      <div class="pick"><span class="n">04</span><span class="t">+</span><span class="n">01</span></div>
+      <div class="body-col">
+        <p>Before I looked at the reference site I would have said Refraction, straight. Having looked at it, I'd change the order: <strong>lead with the running agent, and spend the visual identity everywhere else.</strong></p>
+        <p>The hero's job is to convert a founder who arrived from Upwork with thirty seconds of patience. A prism asks them to infer what you do. A console shows them. Direction 04 wins that fight, and it wins it on mobile, which is where a meaningful share of that traffic actually lands.</p>
+        <p>But 04 alone is forgettable — it looks like a dev tool. So Refraction supplies everything around it: the prism becomes the <strong>wordmark and the section-transition motif</strong>, the spectrum becomes the four service colors, and the dispersion scene takes over as the full-bleed moment behind <em>What We Build</em> — where "one input, four outputs" is literally the content.</p>
+      </div>
+    </div>
+    <div>
+      <div class="body-col">
+        <p><span class="lbl">How the pieces land</span></p>
+        <p><strong>Hero</strong> — 04's agent console, left-aligned headline, no 3D above the fold. Fast first paint, legible in four seconds, full copy in the initial HTML.</p>
+        <p><strong>What We Build</strong> — Refraction's prism, full-bleed. One beam in, four rays out, each terminating at a service card in its own spectrum color. The graphic and the information are the same object.</p>
+        <p><strong>How We Work</strong> — Lattice's point-and-line engine, scroll-driven, assembling across Discover → Architect → Build → Validate → Deliver.</p>
+        <p><strong>Capabilities</strong> — the 04 console again, three scripts, each labeled a demonstration.</p>
+        <p>And build the renderers in that order. 04 needs no WebGL at all, so the site is <em>live and converting</em> before a single Three.js byte ships. The prism and the lattice land as progressive enhancements on hardware that can afford them. That also gives your reduced-motion and low-end-mobile path for free — it is just the site minus the enhancements, with no content lost.</p>
+        <p>On type: <strong>Instrument Serif for the hero headline only</strong>, Instrument Sans for every other heading. Editorial where it earns attention, engineered everywhere it has to do work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="lbl">Phase D preview</div>
+    <div>
+      <h2>How this gets built, and the two things blocking it.</h2>
+      <p class="lede">Your brief proposed React + Vite + Tailwind + R3F. I'd change one thing in that stack, for a reason that matters commercially.</p>
+    </div>
+  </div>
+
+  <div class="body-col">
+    <p>A Vite React SPA on GitHub Pages ships an empty <code>&lt;div id="root"&gt;</code> and renders everything client-side. For a site whose top two jobs are <strong>search discoverability</strong> and <strong>fast first paint from an Upwork or LinkedIn click</strong>, that's the wrong default — you'd be paying a rendering tax on 90% of the page to support the 10% that's actually interactive.</p>
+    <p>I'd use <strong>Astro with React islands</strong> instead. Same React components, same Tailwind, same R3F — but Astro ships zero JavaScript by default and hydrates only the WebGL hero and the inquiry form. Every word of your copy is in the initial HTML for crawlers and link previewers. If you'd rather stay on pure React, <code>vite-react-ssg</code> gets you most of the way by prerendering at build time; Astro just makes the island boundary explicit instead of something you have to remember to maintain.</p>
+  </div>
+
+  <div class="stack">
+    <div class="st"><span class="lbl">Framework</span><span class="nm">Astro 5 + React islands</span><p>Zero JS baseline, real HTML for SEO, React only where it earns its weight.</p></div>
+    <div class="st"><span class="lbl">Styling</span><span class="nm">Tailwind + CSS tokens</span><p>As you proposed. Design tokens as CSS custom properties so themes and tiers stay swappable.</p></div>
+    <div class="st"><span class="lbl">3D</span><span class="nm">React Three Fiber + drei</span><p>Loaded as a progressive enhancement below the fold, never in the hero. Three fidelity tiers chosen at runtime from device capability.</p></div>
+    <div class="st"><span class="lbl">Animation</span><span class="nm">Motion + native scroll-driven CSS</span><p>Scroll-linked animation in CSS where supported, Motion for orchestration. This is the layer doing what GSAP and Rive do on the reference site.</p></div>
+    <div class="st"><span class="lbl">Inquiry form</span><span class="nm">Formspree or Basin, + Cal.com</span><p>Project type, business problem, budget band, contact preference. Four fields, honeypot, no backend. Cal.com for the discovery-call path.</p></div>
+    <div class="st"><span class="lbl">Deploy</span><span class="nm">GitHub Actions &rarr; Pages</span><p>Build on push to <code>master</code>, publish the artifact. CNAME preserved, HTTPS unchanged.</p></div>
+  </div>
+
+  <div class="blockers">
+    <div class="bl"><span class="n">01</span><p><strong>The <code>www</code> certificate, before anything else.</strong> This is independent of the redesign and shouldn't wait for it. Setting the Pages custom domain to <code>www.smashglass.com</code> makes GitHub provision certificates for both hosts and redirect the apex to www. Until that's done, every link you've already handed out is broken.</p></div>
+    <div class="bl"><span class="n">02</span><p><strong>Your <code>gh</code> token has no <code>workflow</code> scope.</strong> Current scopes are <code>admin:public_key</code>, <code>gist</code>, <code>read:org</code>, <code>repo</code> — which means any push that creates or edits <code>.github/workflows/deploy.yml</code> will be rejected. Fix it before we start building: <code>gh auth refresh -h github.com -s workflow</code>.</p></div>
+    <div class="bl"><span class="n">03</span><p><strong>Pages is on the legacy Jekyll builder.</strong> The repo currently reports <code>build_type: legacy</code> with source <code>master /</code>, meaning GitHub builds Jekyll for you automatically. That has to flip to <code>workflow</code> before an Actions-built site can deploy. It's a one-time setting change in repo settings and I'll need you to confirm before I touch it, since it's the switch that takes the current site down.</p></div>
+    <div class="bl"><span class="n">04</span><p><strong>Nothing in the proposed copy claims anything you can't back.</strong> No clients, no testimonials, no metrics, no team. The "Featured Capabilities" section ships as clearly labeled interactive <em>demonstrations</em> — an ops agent, an AI-assisted engineering workflow, an integration pipeline — not as case studies, until you have real work you're free to publish.</p></div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="sec-head">
+    <div class="lbl">Next</div>
+    <div><h2>What I need from you.</h2></div>
+  </div>
+  <div class="asks">
+    <div class="ask"><span class="n">01</span><p><strong>Let me fix the <code>www</code> certificate now</strong>, today, independent of everything below. It's a settings change plus a one-line <code>CNAME</code> edit. I'll need you to confirm, because it briefly changes the live site's canonical address.</p></div>
+    <div class="ask"><span class="n">02</span><p><strong>Pick a direction</strong> — 01, 02, 03, 04, or the 04+01 hybrid I recommend. Then I'll produce high-fidelity desktop and mobile mockups for the hero, service cards, process section, capabilities section, and the inquiry flow, with static frames for each key animation state.</p></div>
+    <div class="ask"><span class="n">03</span><p><strong>Say yes or no to deleting <code>links.md</code></strong>. One commit, two minutes, immediate credibility win.</p></div>
+    <div class="ask"><span class="n">04</span><p><strong>Confirm the automotive positioning.</strong> My instinct is to demote it from "what we do" to "where we've shipped" — but if automotive aftermarket is where your pipeline actually comes from, that changes the hero copy and I should know now.</p></div>
+    <div class="ask"><span class="n">05</span><p><strong>Pick the contact path.</strong> Inquiry form, booked discovery call, or both. Both converts best; it's also one more service to configure. And tell me whether <span class="mono">1-512-797-9101</span> should stay public.</p></div>
+    <div class="ask"><span class="n">06</span><p><strong>Anything you want kept</strong> that I marked Cut. The automotive credential is the one I'd most expect you to push back on.</p></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function setup(cv){
+    var ctx = cv.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function size(){
+      var r = cv.getBoundingClientRect();
+      cv.width = Math.max(1, Math.round(r.width * dpr));
+      cv.height = Math.max(1, Math.round(r.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { w: r.width, h: r.height };
+    }
+    return { ctx: ctx, size: size };
+  }
+  function visible(el){
+    var r = el.getBoundingClientRect();
+    return r.bottom > -200 && r.top < window.innerHeight + 200;
+  }
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+  /* ---------- 01 REFRACTION ---------- */
+  (function(){
+    var cv = document.getElementById("cv1"); if(!cv) return;
+    var s = setup(cv), d = s.size(), ctx = s.ctx;
+    var COLORS = ["#4F7DFF","#22D3A5","#FFB020","#FF5C7A"];
+    var LABELS = ["AI AGENTS","AUTOMATION","INTEGRATIONS","MODERNIZATION"];
+    var py = 0.5, tpy = 0.5, rot = 0, t = 0;
+
+    cv.parentElement.addEventListener("pointermove", function(e){
+      var r = cv.getBoundingClientRect();
+      tpy = clamp((e.clientY - r.top) / r.height, 0.12, 0.88);
+    });
+    cv.parentElement.addEventListener("pointerleave", function(){ tpy = 0.5; });
+    window.addEventListener("resize", function(){ d = s.size(); });
+
+    function prismPath(cx, cy, rad, a){
+      ctx.beginPath();
+      for(var i=0;i<3;i++){
+        var ang = a + i * Math.PI * 2/3 - Math.PI/2;
+        var x = cx + Math.cos(ang)*rad, y = cy + Math.sin(ang)*rad*1.06;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+    }
+
+    function draw(){
+      var w = d.w, h = d.h;
+      py += (tpy - py) * 0.07;
+      ctx.clearRect(0,0,w,h);
+
+      var bg = ctx.createRadialGradient(w*0.55, h*0.5, 0, w*0.55, h*0.5, w*0.75);
+      bg.addColorStop(0, "#0D1017"); bg.addColorStop(1, "#07080B");
+      ctx.fillStyle = bg; ctx.fillRect(0,0,w,h);
+
+      var cx = w*0.60, cy = h*0.5, rad = Math.min(w,h)*0.17;
+      var sy = h*py, sx = -w*0.05;
+
+      ctx.globalCompositeOperation = "lighter";
+
+      /* incoming beam */
+      var ang0 = Math.atan2(cy - sy, cx - sx);
+      for(var p=0;p<3;p++){
+        ctx.beginPath();
+        ctx.moveTo(sx, sy); ctx.lineTo(cx, cy);
+        ctx.strokeStyle = "rgba(226,232,240," + (0.05 + p*0.05) + ")";
+        ctx.lineWidth = (10 - p*3.2);
+        ctx.stroke();
+      }
+
+      /* dispersed rays */
+      for(var i=0;i<4;i++){
+        var spread = (i - 1.5) * 0.115 + Math.sin(t*0.6 + i)*0.006;
+        var a = ang0 + spread;
+        var ex = cx + Math.cos(a) * w, ey = cy + Math.sin(a) * w;
+        var g = ctx.createLinearGradient(cx, cy, ex, ey);
+        g.addColorStop(0, COLORS[i]); g.addColorStop(0.55, COLORS[i] + "55"); g.addColorStop(1, COLORS[i] + "00");
+        for(var q=0;q<2;q++){
+          ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey);
+          ctx.strokeStyle = g; ctx.globalAlpha = q === 0 ? 0.30 : 0.85;
+          ctx.lineWidth = q === 0 ? 11 : 1.6; ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+
+        /* label at the ray's terminus inside the frame */
+        var lx = cx + Math.cos(a) * (w*0.30), ly = cy + Math.sin(a) * (w*0.30);
+        if(lx < w - 18 && ly > 12 && ly < h - 12){
+          ctx.globalCompositeOperation = "source-over";
+          ctx.font = "500 9px 'Spline Sans Mono', monospace";
+          ctx.fillStyle = COLORS[i] + "DD"; ctx.textAlign = "right";
+          ctx.fillText(LABELS[i], Math.min(lx, w-14), ly + 3);
+          ctx.globalCompositeOperation = "lighter";
+        }
+      }
+
+      ctx.globalCompositeOperation = "source-over";
+
+      /* prism */
+      rot += reduce ? 0 : 0.0022;
+      prismPath(cx, cy, rad, rot);
+      var pg = ctx.createLinearGradient(cx-rad, cy-rad, cx+rad, cy+rad);
+      pg.addColorStop(0, "rgba(160,190,230,0.17)");
+      pg.addColorStop(0.5, "rgba(120,150,200,0.06)");
+      pg.addColorStop(1, "rgba(200,220,255,0.19)");
+      ctx.fillStyle = pg; ctx.fill();
+      ctx.strokeStyle = "rgba(205,225,255,0.55)"; ctx.lineWidth = 1.1; ctx.stroke();
+
+      prismPath(cx, cy, rad*0.56, -rot*1.5);
+      ctx.strokeStyle = "rgba(205,225,255,0.17)"; ctx.lineWidth = 0.8; ctx.stroke();
+
+      t += 0.016;
+    }
+
+    function loop(){ if(visible(cv)) draw(); requestAnimationFrame(loop); }
+    if(reduce){ draw(); } else { loop(); }
+  })();
+
+  /* ---------- 02 LATTICE ---------- */
+  (function(){
+    var cv = document.getElementById("cv2"); if(!cv) return;
+    var s = setup(cv), d = s.size(), ctx = s.ctx;
+    var COLS = 9, ROWS = 5, nodes = [], edges = [];
+
+    function build(){
+      nodes = []; edges = [];
+      for(var r=0;r<ROWS;r++){
+        for(var c=0;c<COLS;c++){
+          var seed = Math.sin(r*37.1 + c*91.7) * 43758.5453;
+          var rnd1 = seed - Math.floor(seed);
+          var seed2 = Math.sin(r*11.3 + c*57.9) * 24634.6345;
+          var rnd2 = seed2 - Math.floor(seed2);
+          nodes.push({
+            cx: 0.06 + rnd1 * 0.88, cy: 0.08 + rnd2 * 0.84,
+            lx: 0.10 + (c/(COLS-1)) * 0.80, ly: 0.18 + (r/(ROWS-1)) * 0.64,
+            ph: rnd1 * 6.28, r: r, c: c
+          });
+        }
+      }
+      function idx(r,c){ return r*COLS + c; }
+      for(var r2=0;r2<ROWS;r2++) for(var c2=0;c2<COLS;c2++){
+        if(c2 < COLS-1) edges.push([idx(r2,c2), idx(r2,c2+1)]);
+        if(r2 < ROWS-1) edges.push([idx(r2,c2), idx(r2+1,c2)]);
+        if(r2 < ROWS-1 && c2 < COLS-1 && (r2+c2) % 2 === 0) edges.push([idx(r2,c2), idx(r2+1,c2+1)]);
+      }
+    }
+    build();
+    window.addEventListener("resize", function(){ d = s.size(); });
+
+    function progress(){
+      if(reduce) return 0.72;
+      var r = cv.getBoundingClientRect(), vh = window.innerHeight;
+      return clamp((vh - r.top - r.height * 0.28) / (vh * 0.70), 0, 1);
+    }
+
+    var t = 0;
+    function draw(){
+      var w = d.w, h = d.h, p = progress();
+      var e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+
+      ctx.clearRect(0,0,w,h);
+      var bg = ctx.createLinearGradient(0, 0, w, h);
+      bg.addColorStop(0, "#0F1420"); bg.addColorStop(1, "#060810");
+      ctx.fillStyle = bg; ctx.fillRect(0,0,w,h);
+
+      var pos = nodes.map(function(n){
+        var drift = reduce ? 0 : (1 - e) * 0.012;
+        return {
+          x: (n.cx + (n.lx - n.cx) * e + Math.sin(t + n.ph) * drift) * w,
+          y: (n.cy + (n.ly - n.cy) * e + Math.cos(t * 0.8 + n.ph) * drift) * h
+        };
+      });
+
+      ctx.globalCompositeOperation = "lighter";
+      for(var i=0;i<edges.length;i++){
+        var a = pos[edges[i][0]], b = pos[edges[i][1]];
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = "rgba(99,102,241," + (e * 0.42) + ")";
+        ctx.lineWidth = 0.75; ctx.stroke();
+
+        if(e > 0.45 && i % 4 === 0){
+          var ph = ((t * 0.30 + i * 0.13) % 1);
+          var px = a.x + (b.x - a.x) * ph, py2 = a.y + (b.y - a.y) * ph;
+          ctx.beginPath(); ctx.arc(px, py2, 1.6, 0, 6.2832);
+          ctx.fillStyle = "rgba(56,189,248," + ((e - 0.45) / 0.55 * 0.9) + ")"; ctx.fill();
+        }
+      }
+
+      for(var j=0;j<pos.length;j++){
+        var rr = 1.3 + e * 1.0;
+        var gl = ctx.createRadialGradient(pos[j].x, pos[j].y, 0, pos[j].x, pos[j].y, rr * 5);
+        gl.addColorStop(0, "rgba(56,189,248," + (0.30 + e * 0.45) + ")");
+        gl.addColorStop(1, "rgba(56,189,248,0)");
+        ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(pos[j].x, pos[j].y, rr * 5, 0, 6.2832); ctx.fill();
+        ctx.beginPath(); ctx.arc(pos[j].x, pos[j].y, rr, 0, 6.2832);
+        ctx.fillStyle = "rgba(226,240,255," + (0.45 + e * 0.5) + ")"; ctx.fill();
+      }
+      ctx.globalCompositeOperation = "source-over";
+
+      ctx.font = "500 9px 'Spline Sans Mono', monospace";
+      ctx.fillStyle = "rgba(127,138,133,0.9)"; ctx.textAlign = "right";
+      ctx.fillText("ASSEMBLY " + Math.round(p * 100) + "%", w - 16, 22);
+
+      t += 0.016;
+    }
+
+    function loop(){ if(visible(cv)) draw(); requestAnimationFrame(loop); }
+    if(reduce){ draw(); } else { loop(); }
+  })();
+
+  /* ---------- 03 FRACTURE ---------- */
+  (function(){
+    var cv = document.getElementById("cv3"); if(!cv) return;
+    var s = setup(cv), d = s.size(), ctx = s.ctx;
+    var seeds = [], cells = [], t0 = 0, cycle = 7.2;
+
+    function rand(i, k){ var v = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return v - Math.floor(v); }
+
+    function clip(poly, p, q){
+      var out = [], mx = (p.x+q.x)/2, my = (p.y+q.y)/2, nx = q.x-p.x, ny = q.y-p.y;
+      function side(pt){ return (pt.x-mx)*nx + (pt.y-my)*ny; }
+      for(var i=0;i<poly.length;i++){
+        var a = poly[i], b = poly[(i+1)%poly.length], sa = side(a), sb = side(b);
+        if(sa <= 0) out.push(a);
+        if((sa < 0 && sb > 0) || (sa > 0 && sb < 0)){
+          var tt = sa / (sa - sb);
+          out.push({ x: a.x + tt*(b.x-a.x), y: a.y + tt*(b.y-a.y) });
+        }
+      }
+      return out;
+    }
+
+    function build(off){
+      var N = 22;
+      seeds = [];
+      for(var i=0;i<N;i++) seeds.push({ x: rand(i+off,1), y: rand(i+off,2) });
+      /* grid targets: 4 x 3 layout cards */
+      var GC = 4, GR = 3;
+      cells = [];
+      for(var k=0;k<N;k++){
+        var poly = [{x:-0.12,y:-0.12},{x:1.12,y:-0.12},{x:1.12,y:1.12},{x:-0.12,y:1.12}];
+        for(var m=0;m<N;m++){ if(m!==k) poly = clip(poly, seeds[k], seeds[m]); }
+        if(poly.length < 3) continue;
+        var cx = 0, cy = 0;
+        for(var n=0;n<poly.length;n++){ cx += poly[n].x; cy += poly[n].y; }
+        cx /= poly.length; cy /= poly.length;
+        var gi = k % (GC*GR), gc = gi % GC, gr = Math.floor(gi / GC);
+        cells.push({
+          poly: poly, cx: cx, cy: cy,
+          gx: 0.07 + (gc + 0.5) / GC * 0.86,
+          gy: 0.10 + (gr + 0.5) / GR * 0.80,
+          gw: 0.86 / GC * 0.90, gh: 0.80 / GR * 0.86,
+          jx: (rand(k,7) - 0.5), jy: (rand(k,8) - 0.5), rot: (rand(k,9) - 0.5) * 0.5
+        });
+      }
+    }
+    build(0);
+    window.addEventListener("resize", function(){ d = s.size(); });
+    cv.parentElement.addEventListener("click", function(){ t0 = performance.now()/1000; build(Math.floor(t0 * 13) % 97); });
+
+    function draw(now){
+      var w = d.w, h = d.h;
+      var el = reduce ? 0.80 : ((now - t0) % cycle) / cycle;
+      /* 0-.12 intact  .12-.42 break out  .42-.78 reassemble to grid  .78-1 hold */
+      var burst = 0, grid = 0;
+      if(el < 0.12){ burst = 0; grid = 0; }
+      else if(el < 0.42){ var u = (el-0.12)/0.30; burst = 1 - Math.pow(1-u, 3); grid = 0; }
+      else if(el < 0.78){ var v = (el-0.42)/0.36; var ev = v<0.5 ? 2*v*v : 1-Math.pow(-2*v+2,2)/2; burst = 1-ev; grid = ev; }
+      else { burst = 0; grid = 1; }
+
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = "#08090C"; ctx.fillRect(0,0,w,h);
+
+      for(var i=0;i<cells.length;i++){
+        var c = cells[i];
+        var ox = c.jx * burst * 0.30, oy = c.jy * burst * 0.30;
+        var rot = c.rot * burst;
+
+        ctx.save();
+        ctx.translate(w*(c.cx+ox), h*(c.cy+oy));
+        ctx.rotate(rot);
+        ctx.beginPath();
+        if(grid > 0.01){
+          /* blend the shard outline toward a rectangular card */
+          for(var k=0;k<c.poly.length;k++){
+            var vx = (c.poly[k].x - c.cx), vy = (c.poly[k].y - c.cy);
+            var rx = (vx > 0 ? 1 : -1) * c.gw/2, ry = (vy > 0 ? 1 : -1) * c.gh/2;
+            var bx = (vx + (rx - vx) * grid), by = (vy + (ry - vy) * grid);
+            var tx = (w*(c.cx) + w*bx + (w*(c.gx - c.cx)) * grid) - w*(c.cx+ox);
+            var ty = (h*(c.cy) + h*by + (h*(c.gy - c.cy)) * grid) - h*(c.cy+oy);
+            if(k===0) ctx.moveTo(tx, ty); else ctx.lineTo(tx, ty);
+          }
+        } else {
+          for(var k2=0;k2<c.poly.length;k2++){
+            var px = w*(c.poly[k2].x - c.cx), py = h*(c.poly[k2].y - c.cy);
+            if(k2===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+        }
+        ctx.closePath();
+
+        var tone = 0.035 + rand(i, 3) * 0.055;
+        ctx.fillStyle = "rgba(26,29,38," + (0.55 + tone*4) + ")";
+        ctx.fill();
+
+        var heat = Math.max(burst, grid * 0.35);
+        var eg = ctx.createLinearGradient(-w*0.1, -h*0.1, w*0.1, h*0.1);
+        eg.addColorStop(0, "rgba(255,45,120," + (0.14 + heat*0.70) + ")");
+        eg.addColorStop(1, "rgba(124,58,237," + (0.14 + heat*0.70) + ")");
+        ctx.strokeStyle = eg; ctx.lineWidth = 0.9 + heat * 0.9; ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.font = "500 9px 'Spline Sans Mono', monospace";
+      ctx.fillStyle = "rgba(200,203,212,0.5)"; ctx.textAlign = "right";
+      ctx.fillText(grid > 0.6 ? "SHARDS → LAYOUT GRID" : (burst > 0.2 ? "FRACTURING" : "INTACT"), w - 16, 22);
+    }
+
+    function loop(now){ if(visible(cv)) draw(now/1000); requestAnimationFrame(loop); }
+    if(reduce){ draw(0); } else { t0 = performance.now()/1000; requestAnimationFrame(loop); }
+  })();
+
+  /* ---------- 04 RUN ---------- */
+  (function(){
+    var host = document.getElementById("run4"); if(!host) return;
+    var STEPS = [
+      ["plan","PLAN","Four steps: pull orders, pull invoices, match on PO, diff line totals."],
+      ["tool","TOOL","<b>dealer_api.orders</b>(date=\"2026-10-27\") &rarr; 142 records"],
+      ["tool","TOOL","<b>supplier.invoices</b>(date=\"2026-10-27\") &rarr; 138 records"],
+      ["step","STEP","Matched 136 on PO number. 6 orders and 2 invoices unmatched."],
+      ["step","STEP","4 line-total mismatches over $50. Largest $412.80 on PO-88412."],
+      ["hold","HOLD","Awaiting your approval before posting adjustments to the ERP."],
+      ["done","DONE","Approved. 4 adjustments posted. Summary emailed to parts@."]
+    ];
+    var els = STEPS.map(function(st){
+      var d = document.createElement("div");
+      d.className = "run-step " + st[0];
+      d.innerHTML = '<span class="k ' + st[0] + '">' + st[1] + '</span><span class="v">' + st[2] + '</span>';
+      host.appendChild(d);
+      return d;
+    });
+
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+      els.forEach(function(e){ e.classList.add("on"); });
+      return;
+    }
+
+    var i = 0, timer = null;
+    function clearCaret(){
+      var c = host.querySelector(".caret"); if(c) c.parentNode.removeChild(c);
+    }
+    function tick(){
+      if(i >= els.length){
+        timer = setTimeout(function(){
+          clearCaret();
+          els.forEach(function(e){ e.classList.remove("on"); });
+          i = 0;
+          timer = setTimeout(tick, 900);
+        }, 3600);
+        return;
+      }
+      clearCaret();
+      els[i].classList.add("on");
+      var car = document.createElement("span");
+      car.className = "caret";
+      els[i].querySelector(".v").appendChild(car);
+      var delay = STEPS[i][0] === "hold" ? 2200 : (STEPS[i][0] === "plan" ? 1300 : 1050);
+      i++;
+      timer = setTimeout(tick, delay);
+    }
+    timer = setTimeout(tick, 700);
+  })();
+})();
+</script>

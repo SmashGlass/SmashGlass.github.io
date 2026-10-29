@@ -1,0 +1,40 @@
+---
+import AgentConsole from './AgentConsole.tsx';
+---
+<header class="hero section-rule" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Senior-led engineering studio</p>
+      <h1>From plain English to production software.</h1>
+      <p class="sub">
+        SmashGlass builds AI agents, business automations, and custom software that do real
+        operational work &mdash; designed, reviewed, and shipped by a hands-on engineering leader.
+      </p>
+      <div class="ctas">
+        <a class="btn btn-pri" href="#start">Discuss your project <span class="ar">&rarr;</span></a>
+        <a class="btn btn-sec" href="#demos">Explore our work</a>
+      </div>
+    </div>
+    <AgentConsole uid="hero" client:visible />
+  </div>
+</header>
+
+<style>
+  .hero { padding: clamp(56px, 9vw, 104px) 0 clamp(48px, 7vw, 80px); }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1.08fr;
+    gap: clamp(32px, 5vw, 68px); align-items: center;
+  }
+  @media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; gap: 38px; } }
+
+  .hero h1 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(2.5rem, 5.6vw, 4.1rem);
+    line-height: 1.03; letter-spacing: -0.018em; margin: 18px 0 20px;
+  }
+  .sub {
+    font-size: clamp(1rem, 1.5vw, 1.1rem); color: var(--color-mute);
+    line-height: 1.6; max-width: 46ch; margin-bottom: 30px;
+  }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+</style>

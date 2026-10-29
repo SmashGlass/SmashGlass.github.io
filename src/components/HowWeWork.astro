@@ -1,0 +1,104 @@
+---
+import { PROCESS } from '../data/scenarios';
+---
+<section id="work" class="section-rule">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">How we work</p>
+      <h2>AI moves fast. Judgment decides where.</h2>
+      <p>
+        Five stages. AI-assisted implementation compresses the middle; experienced engineering
+        judgment governs the parts where being wrong is expensive.
+      </p>
+    </div>
+
+    <ol class="proc">
+      {PROCESS.map((p) => (
+        <li class="ph">
+          <span class="d" aria-hidden="true"></span>
+          <span class="n">{p.n}</span>
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+          <span class={`who ${p.who === 'HUMAN-LED' ? 'hu' : 'ai'}`}>{p.who}</span>
+        </li>
+      ))}
+    </ol>
+
+    <div class="gov">
+      <p>
+        <strong>Why the split matters.</strong> AI coding assistants are genuinely fast at
+        implementation, and I use them heavily &mdash; that's how a fixed-price engagement at this
+        size is possible at all. What they don't do is decide what should be built, where the
+        security boundary sits, or which failure mode will take your business down at 2am. That part
+        is the job, and it doesn't get delegated.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proc {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    position: relative; margin-top: 14px; list-style: none; padding: 0;
+  }
+  @media (max-width: 860px) { .proc { grid-template-columns: 1fr; } }
+
+  .ph {
+    padding: 24px 20px 24px 0; border-top: 1px solid var(--color-rule-2);
+    position: relative; display: flex; flex-direction: column; gap: 9px;
+  }
+  @media (max-width: 860px) {
+    .ph { padding: 20px 0 20px 26px; border-top: none; border-left: 1px solid var(--color-rule-2); }
+  }
+
+  .ph .d {
+    position: absolute; top: -4.5px; left: 0; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--color-ink); border: 1.5px solid var(--color-mute-2);
+    transition: border-color .3s, background .3s, box-shadow .3s;
+  }
+  @media (max-width: 860px) { .ph .d { top: 20px; left: -5px; } }
+  .ph.lit .d {
+    border-color: var(--color-automate); background: var(--color-automate);
+    box-shadow: 0 0 0 4px rgb(34 211 165 / 0.14);
+  }
+
+  .ph .n { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--color-mute-2); }
+  .ph h3 { font-size: 0.98rem; font-weight: 600; }
+  .ph p { font-size: 0.81rem; color: var(--color-mute); line-height: 1.55; }
+  .ph .who {
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.06em;
+    padding: 3px 7px; border-radius: 2px; align-self: flex-start; margin-top: 3px;
+  }
+  .who.ai { background: rgb(79 125 255 / 0.14); color: #88A8FF; }
+  .who.hu { background: rgb(255 176 32 / 0.14); color: var(--color-integrate); }
+
+  .gov {
+    margin-top: 40px; padding: 22px 24px; border: 1px solid var(--color-rule);
+    border-left: 2px solid var(--color-integrate); border-radius: 3px;
+    background: var(--color-ink-2); max-width: 72ch;
+  }
+  .gov p { font-size: 0.92rem; color: var(--color-mute); line-height: 1.6; }
+  .gov strong { color: var(--color-bone); font-weight: 600; }
+</style>
+
+<script>
+  const phases = document.querySelectorAll<HTMLElement>('.proc .ph');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const idx = Array.from(phases).indexOf(e.target as HTMLElement);
+          setTimeout(() => e.target.classList.add('lit'), idx * 110);
+          io.unobserve(e.target);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    phases.forEach((p) => io.observe(p));
+  } else {
+    phases.forEach((p) => p.classList.add('lit'));
+  }
+</script>

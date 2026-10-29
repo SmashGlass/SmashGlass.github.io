@@ -1,0 +1,41 @@
+---
+import PrismScene from './PrismScene.astro';
+const links = [
+  { href: '#build', label: 'What we build' },
+  { href: '#work', label: 'How we work' },
+  { href: '#demos', label: 'Capabilities' },
+  { href: '#about', label: 'About' },
+];
+---
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="mark"><PrismScene mark /></span>
+      SMASHGLASS
+    </a>
+    <div class="nav-links">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </div>
+    <a class="btn btn-pri" href="#start">Discuss your project <span class="ar">&rarr;</span></a>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: sticky; top: 0; z-index: 60;
+    background: rgb(7 8 11 / 0.82);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .nav-in { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 24px; }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+    letter-spacing: -0.02em; color: var(--color-bone); text-decoration: none;
+  }
+  .mark { width: 22px; height: 22px; display: block; flex: 0 0 auto; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 0.83rem; color: var(--color-mute); text-decoration: none; transition: color .16s; }
+  .nav-links a:hover { color: var(--color-bone); }
+  @media (max-width: 900px) { .nav-links { display: none; } }
+</style>

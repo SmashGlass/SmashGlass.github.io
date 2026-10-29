@@ -1,0 +1,70 @@
+---
+const values = [
+  ['01', 'Executive-level technical judgment', 'Architecture and trade-off decisions made by someone accountable for them before.'],
+  ['02', 'Hands-on delivery', 'The person scoping your project is the person writing it.'],
+  ['03', 'Production engineering experience', 'Systems that run unattended, recover from failure, and can be maintained by your team.'],
+  ['04', 'AI agent architecture', 'Tool design, approval gates, evals, and run observability — not a prompt in a loop.'],
+  ['05', 'Reliability, testing, security', 'Test coverage and a security pass are in scope, not an upsell.'],
+  ['06', 'Direct collaboration', 'One channel, one person, straight answers about what’s hard.'],
+];
+---
+<section id="about" class="section-rule">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Why SmashGlass</p>
+      <h2>You get the person who does the work.</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="prose">
+        <p>
+          SmashGlass is a boutique studio, not an agency. There is no bench, no junior team, and no
+          account layer between you and the engineering. You work directly with someone who has run
+          engineering organizations and still writes and ships the code.
+        </p>
+        <p>
+          That matters most on the decisions that are expensive to get wrong &mdash; where the
+          security boundary goes, which integration will quietly break under load, what should stay
+          manual because automating it is a bad trade. Those calls come from having shipped and
+          maintained production systems, not from a framework.
+        </p>
+        <p>
+          Engagements are fixed-price and scoped up front, typically $1,500&ndash;$5,000 for a first
+          project. If it turns into something larger, we'll both know why.
+        </p>
+      </div>
+
+      <dl class="vals">
+        {values.map(([i, t, s]) => (
+          <div class="val">
+            <span class="i">{i}</span>
+            <div>
+              <dt class="t">{t}</dt>
+              <dd class="s">{s}</dd>
+            </div>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 5vw, 60px); align-items: start;
+  }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  .prose { display: flex; flex-direction: column; gap: 18px; }
+  .prose p { color: var(--color-mute); line-height: 1.65; }
+
+  .vals { display: flex; flex-direction: column; border-top: 1px solid var(--color-rule); margin: 0; }
+  .val {
+    display: grid; grid-template-columns: 26px 1fr; gap: 14px;
+    padding: 15px 0; border-bottom: 1px solid var(--color-rule); align-items: start;
+  }
+  .val .i { font-family: var(--font-mono); font-size: 0.64rem; color: var(--color-mute-2); padding-top: 2px; }
+  .val .t { font-family: var(--font-display); font-size: 0.92rem; color: var(--color-bone); font-weight: 500; }
+  .val .s { font-size: 0.82rem; color: var(--color-mute); line-height: 1.5; margin: 3px 0 0; }
+</style>
