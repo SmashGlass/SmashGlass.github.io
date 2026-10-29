@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import CredentialStrip from '../components/CredentialStrip.astro';
+import WhatWeBuild from '../components/WhatWeBuild.astro';
+import HowWeWork from '../components/HowWeWork.astro';
+import Capabilities from '../components/Capabilities.astro';
+import About from '../components/About.astro';
+import StartProject from '../components/StartProject.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'SmashGlass — AI agents, automation, and custom software';
+const description =
+  'SmashGlass builds AI agents, business automations, and custom software that do real operational work. Senior-led boutique engineering studio. Fixed-price engagements from $1,500.';
+---
+<Base title={title} description={description}>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <CredentialStrip />
+    <WhatWeBuild />
+    <HowWeWork />
+    <Capabilities />
+    <About />
+    <StartProject />
+  </main>
+  <Footer />
+</Base>

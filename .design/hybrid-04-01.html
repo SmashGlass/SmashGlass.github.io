@@ -1,0 +1,641 @@
+<title>SmashGlass Homepage Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* Direction 01 "Refraction" identity + Direction 04 "Run" hero.
+   Committed single-theme dark design - every color painted explicitly. */
+:root{
+  --ink:#07080B; --ink-2:#0C0E13; --graphite:#14161C; --graphite-2:#1B1F27;
+  --bone:#EDEEF2; --mute:#8A919E; --mute-2:#5C6472; --rule:#21252E; --rule-2:#2C323D;
+  --agents:#4F7DFF; --automate:#22D3A5; --integrate:#FFB020; --modernize:#FF5C7A;
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ink); color:var(--bone);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px}
+@media (max-width:640px){ .wrap{padding:0 20px} }
+h1,h2,h3,h4{margin:0; text-wrap:balance; font-family:"Instrument Sans",sans-serif; font-weight:600; letter-spacing:-.025em; line-height:1.12}
+p{margin:0}
+a{color:inherit; text-decoration:none}
+.serif{font-family:"Instrument Serif",Georgia,serif; font-weight:400; letter-spacing:-.005em}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+.eyebrow{font-family:"JetBrains Mono",monospace; font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--mute-2)}
+:focus-visible{outline:2px solid var(--agents); outline-offset:3px; border-radius:2px}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex; align-items:center; gap:8px; font-size:.875rem; font-weight:500; padding:12px 20px; border-radius:3px; border:1px solid transparent; cursor:pointer; transition:transform .18s ease, background .18s ease, border-color .18s ease; font-family:Inter,sans-serif}
+.btn-pri{background:var(--bone); color:var(--ink)}
+.btn-pri:hover{transform:translateY(-1px); background:#fff}
+.btn-sec{border-color:var(--rule-2); color:var(--bone)}
+.btn-sec:hover{border-color:var(--mute); transform:translateY(-1px)}
+.btn .ar{transition:transform .18s ease}
+.btn:hover .ar{transform:translateX(3px)}
+
+/* ---- nav ---- */
+nav{position:sticky; top:0; z-index:60; background:rgba(7,8,11,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--rule)}
+.nav-in{display:flex; align-items:center; justify-content:space-between; height:66px; gap:24px}
+.brand{display:flex; align-items:center; gap:10px; font-family:"Instrument Sans",sans-serif; font-weight:700; font-size:.95rem; letter-spacing:-.02em}
+.brand canvas{width:22px; height:22px; display:block}
+.nav-links{display:flex; gap:28px; align-items:center}
+.nav-links a{font-size:.83rem; color:var(--mute); transition:color .16s}
+.nav-links a:hover{color:var(--bone)}
+@media (max-width:900px){ .nav-links{display:none} }
+
+/* ---- hero ---- */
+.hero{padding:clamp(56px,9vw,104px) 0 clamp(48px,7vw,80px); border-bottom:1px solid var(--rule)}
+.hero-grid{display:grid; grid-template-columns:1fr 1.08fr; gap:clamp(32px,5vw,68px); align-items:center}
+@media (max-width:940px){ .hero-grid{grid-template-columns:1fr; gap:38px} }
+.hero h1{font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:clamp(2.5rem,5.6vw,4.1rem); line-height:1.03; letter-spacing:-.018em; margin:18px 0 20px}
+.hero .sub{font-size:clamp(1rem,1.5vw,1.1rem); color:var(--mute); line-height:1.6; max-width:46ch; margin-bottom:30px}
+.hero .ctas{display:flex; gap:12px; flex-wrap:wrap}
+
+/* ---- console (Direction 04) ---- */
+.con{background:var(--graphite); border:1px solid var(--rule-2); border-radius:5px; overflow:hidden; display:flex; flex-direction:column; min-height:384px}
+.con-bar{display:flex; align-items:center; gap:9px; padding:11px 14px; border-bottom:1px solid var(--rule); flex:0 0 auto}
+.con-bar .dot{width:7px; height:7px; border-radius:50%; background:var(--automate)}
+.con-bar .nm{font-family:"JetBrains Mono",monospace; font-size:.63rem; letter-spacing:.13em; text-transform:uppercase; color:var(--mute-2)}
+.con-bar .tabs{margin-left:auto; display:flex; gap:4px}
+.con-bar .tab{font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.08em; padding:4px 9px; border-radius:2px; color:var(--mute-2); cursor:pointer; border:1px solid transparent; background:none; transition:all .16s}
+.con-bar .tab:hover{color:var(--mute)}
+.con-bar .tab[aria-selected="true"]{color:var(--bone); border-color:var(--rule-2); background:var(--graphite-2)}
+.con-task{padding:14px; border-bottom:1px solid var(--rule); font-size:.83rem; line-height:1.5; color:#C3CAD6; flex:0 0 auto}
+.con-task .lab{display:block; font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute-2); margin-bottom:7px}
+.con-steps{padding:14px; display:flex; flex-direction:column; gap:9px; flex:1 1 auto}
+.step{display:grid; grid-template-columns:58px 1fr; gap:11px; align-items:start; opacity:0; transform:translateY(5px); transition:opacity .3s ease, transform .3s ease}
+.step.on{opacity:1; transform:none}
+.step .k{font-family:"JetBrains Mono",monospace; font-size:.56rem; letter-spacing:.1em; padding:3px 0; border-radius:2px; text-align:center; margin-top:1px; font-weight:500}
+.step .v{font-family:"JetBrains Mono",monospace; font-size:.695rem; line-height:1.55; color:#98A1AF}
+.step .v b{color:#D5DBE4; font-weight:400}
+.k.plan{background:rgba(79,125,255,.16); color:#88A8FF}
+.k.tool,.k.step{background:rgba(255,255,255,.065); color:#78808E}
+.k.hold{background:rgba(255,176,32,.16); color:var(--integrate)}
+.k.done{background:rgba(34,211,165,.16); color:var(--automate)}
+.step.hold .v{color:var(--integrate)}
+.step.done .v{color:#5FDDB8}
+.caret{display:inline-block; width:6px; height:11px; background:var(--automate); vertical-align:-1px; margin-left:3px; animation:bl 1s step-end infinite}
+@keyframes bl{50%{opacity:0}}
+
+/* ---- credential strip ---- */
+.strip{border-bottom:1px solid var(--rule); padding:26px 0}
+.strip-in{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:22px}
+.cred{display:flex; flex-direction:column; gap:5px}
+.cred .v{font-size:.9rem; color:var(--bone); font-weight:500; font-family:"Instrument Sans",sans-serif}
+.cred .l{font-size:.76rem; color:var(--mute-2); line-height:1.45}
+
+/* ---- sections ---- */
+section{padding:clamp(64px,9vw,112px) 0; border-bottom:1px solid var(--rule)}
+.sec-head{max-width:62ch; margin-bottom:clamp(36px,5vw,56px)}
+.sec-head h2{font-size:clamp(1.85rem,3.8vw,2.85rem); margin:14px 0 16px}
+.sec-head p{color:var(--mute); font-size:1.03rem; line-height:1.6}
+
+/* ---- prism / what we build ---- */
+.prism-stage{position:relative; height:clamp(220px,30vw,330px); margin-bottom:-1px; border-radius:5px 5px 0 0; overflow:hidden; background:var(--ink-2); border:1px solid var(--rule); border-bottom:none}
+.prism-stage canvas{display:block; width:100%; height:100%}
+.svc{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--rule); border-radius:0 0 5px 5px; overflow:hidden}
+@media (max-width:980px){ .svc{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .svc{grid-template-columns:1fr} }
+.card{padding:26px 22px 24px; background:var(--ink-2); border-right:1px solid var(--rule); display:flex; flex-direction:column; gap:12px; position:relative; transition:background .22s}
+.card:last-child{border-right:none}
+@media (max-width:980px){ .card:nth-child(2){border-right:none} .card:nth-child(1),.card:nth-child(2){border-bottom:1px solid var(--rule)} }
+@media (max-width:560px){ .card{border-right:none; border-bottom:1px solid var(--rule)} .card:last-child{border-bottom:none} }
+.card::before{content:""; position:absolute; top:0; left:0; right:0; height:2px; background:var(--c); opacity:.8}
+.card:hover{background:var(--graphite)}
+.card .n{font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.14em; color:var(--c)}
+.card h3{font-size:1.04rem; letter-spacing:-.015em}
+.card .prob{font-size:.845rem; color:var(--mute); line-height:1.55}
+.card .deliv{font-family:"JetBrains Mono",monospace; font-size:.66rem; line-height:1.75; color:var(--mute-2); padding-top:10px; border-top:1px solid var(--rule); margin-top:auto}
+.card .nx{font-size:.78rem; color:var(--c); font-weight:500; display:inline-flex; gap:6px; align-items:center}
+
+/* ---- process ---- */
+.proc{display:grid; grid-template-columns:repeat(5,1fr); gap:0; position:relative; margin-top:14px}
+@media (max-width:860px){ .proc{grid-template-columns:1fr; gap:0} }
+.ph{padding:24px 20px 24px 0; border-top:1px solid var(--rule-2); position:relative; display:flex; flex-direction:column; gap:9px}
+@media (max-width:860px){ .ph{padding:20px 0 20px 26px; border-top:none; border-left:1px solid var(--rule-2)} }
+.ph .d{position:absolute; top:-4.5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--ink); border:1.5px solid var(--mute-2); transition:border-color .3s, background .3s}
+@media (max-width:860px){ .ph .d{top:20px; left:-5px} }
+.ph.lit .d{border-color:var(--automate); background:var(--automate); box-shadow:0 0 0 4px rgba(34,211,165,.14)}
+.ph .n{font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.14em; color:var(--mute-2)}
+.ph h4{font-size:.98rem; font-weight:600}
+.ph p{font-size:.81rem; color:var(--mute); line-height:1.55}
+.ph .who{font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.06em; padding:3px 7px; border-radius:2px; align-self:flex-start; margin-top:3px}
+.who.ai{background:rgba(79,125,255,.14); color:#88A8FF}
+.who.hu{background:rgba(255,176,32,.14); color:var(--integrate)}
+.gov{margin-top:40px; padding:22px 24px; border:1px solid var(--rule); border-left:2px solid var(--integrate); border-radius:3px; background:var(--ink-2); max-width:72ch}
+.gov p{font-size:.92rem; color:var(--mute); line-height:1.6}
+.gov strong{color:var(--bone); font-weight:600}
+
+/* ---- about ---- */
+.about-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,60px); align-items:start}
+@media (max-width:860px){ .about-grid{grid-template-columns:1fr; gap:32px} }
+.vals{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--rule)}
+.val{display:grid; grid-template-columns:26px 1fr; gap:14px; padding:15px 0; border-bottom:1px solid var(--rule); align-items:start}
+.val .i{font-family:"JetBrains Mono",monospace; font-size:.64rem; color:var(--mute-2); padding-top:2px}
+.val .t{font-size:.92rem; color:var(--bone); font-weight:500; font-family:"Instrument Sans",sans-serif}
+.val .s{font-size:.82rem; color:var(--mute); line-height:1.5; margin-top:3px}
+
+/* ---- contact ---- */
+.contact{border-bottom:none; background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)}
+.ct-grid{display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(34px,5vw,66px); align-items:start}
+@media (max-width:900px){ .ct-grid{grid-template-columns:1fr; gap:36px} }
+.ct-grid h2{font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:clamp(2.1rem,4.4vw,3.2rem); letter-spacing:-.015em; line-height:1.05; margin-bottom:18px}
+.alt{margin-top:28px; padding-top:24px; border-top:1px solid var(--rule); display:flex; flex-direction:column; gap:12px}
+.alt a{font-size:.88rem; color:var(--bone); display:inline-flex; gap:9px; align-items:center}
+.alt a:hover{color:var(--agents)}
+.alt .k{font-family:"JetBrains Mono",monospace; font-size:.62rem; color:var(--mute-2); letter-spacing:.1em; min-width:52px}
+form{display:flex; flex-direction:column; gap:16px; background:var(--graphite); border:1px solid var(--rule-2); border-radius:5px; padding:clamp(22px,3vw,30px)}
+.fld{display:flex; flex-direction:column; gap:7px}
+.fld label{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute-2)}
+.fld input,.fld select,.fld textarea{
+  background:var(--ink); border:1px solid var(--rule-2); border-radius:3px; color:var(--bone);
+  padding:11px 12px; font-family:Inter,sans-serif; font-size:.88rem; width:100%; transition:border-color .16s;
+}
+.fld textarea{resize:vertical; min-height:88px; line-height:1.55}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--agents); outline:none}
+.fld .hint{font-size:.74rem; color:var(--mute-2)}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:520px){ .two{grid-template-columns:1fr} }
+.hp{position:absolute; left:-9999px}
+.ok{display:none; padding:14px; border:1px solid var(--automate); border-radius:3px; background:rgba(34,211,165,.08); font-size:.86rem; color:#5FDDB8}
+.ok.show{display:block}
+.proto{font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.1em; color:var(--mute-2); text-align:center}
+
+/* ---- footer ---- */
+footer{padding:36px 0; border-top:1px solid var(--rule)}
+.ft{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center}
+.ft p{font-size:.78rem; color:var(--mute-2)}
+
+.note-badge{display:inline-flex; align-items:center; gap:7px; font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--integrate); border:1px solid rgba(255,176,32,.3); background:rgba(255,176,32,.07); padding:5px 10px; border-radius:2px}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important}
+  .step{opacity:1 !important; transform:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><canvas id="mark" width="44" height="44" aria-hidden="true"></canvas>SMASHGLASS</a>
+    <div class="nav-links">
+      <a href="#build">What we build</a>
+      <a href="#work">How we work</a>
+      <a href="#demos">Capabilities</a>
+      <a href="#about">About</a>
+    </div>
+    <a class="btn btn-pri" href="#start">Discuss your project <span class="ar">&rarr;</span></a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Senior-led engineering studio</div>
+      <h1>From plain English to production software.</h1>
+      <p class="sub">SmashGlass builds AI agents, business automations, and custom software that do real operational work &mdash; designed, reviewed, and shipped by a hands-on engineering leader.</p>
+      <div class="ctas">
+        <a class="btn btn-pri" href="#start">Discuss your project <span class="ar">&rarr;</span></a>
+        <a class="btn btn-sec" href="#demos">Explore our work</a>
+      </div>
+    </div>
+
+    <div class="con">
+      <div class="con-bar">
+        <span class="dot"></span>
+        <span class="nm" id="conName">agent &middot; parts-reconciliation</span>
+        <div class="tabs" role="tablist" aria-label="Demonstration scenario">
+          <button class="tab" role="tab" aria-selected="true" data-s="0">OPS</button>
+          <button class="tab" role="tab" aria-selected="false" data-s="1">ENG</button>
+          <button class="tab" role="tab" aria-selected="false" data-s="2">API</button>
+        </div>
+      </div>
+      <div class="con-task"><span class="lab">Task from the client, in their words</span><span id="conTask"></span></div>
+      <div class="con-steps" id="conSteps"></div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap strip-in">
+    <div class="cred"><span class="v">Hands-on VP of Engineering</span><span class="l">Architecture and delivery, not account management</span></div>
+    <div class="cred"><span class="v">AI agent frameworks, shipped</span><span class="l">Built and deployed, not prototyped</span></div>
+    <div class="cred"><span class="v">Production systems at scale</span><span class="l">Integration, modernization, legacy systems</span></div>
+    <div class="cred"><span class="v">Fixed-price from $1,500</span><span class="l">Scoped up front, no open-ended retainers</span></div>
+  </div>
+</div>
+
+<section id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">What we build</div>
+      <h2 class="serif" style="font-size:clamp(2rem,4.2vw,3rem)">Complexity in. Clarity out.</h2>
+      <p>One engagement, four kinds of work. Most projects start in one of these and pull in a second.</p>
+    </div>
+
+    <div class="prism-stage"><canvas id="prism" aria-label="A beam of light entering a glass prism and leaving as four separate colored rays, one for each service line."></canvas></div>
+    <div class="svc">
+      <div class="card" style="--c:var(--agents)">
+        <span class="n">01</span>
+        <h3>AI Agent Development</h3>
+        <p class="prob">Work that eats hours of someone's week and follows rules you could write down &mdash; but never quite the same way twice.</p>
+        <div class="deliv">&rarr; Agent + tool integrations<br>&rarr; Human approval gates<br>&rarr; Eval suite &amp; run logs<br>&rarr; Deployment + handover</div>
+        <a class="nx" href="#start">Scope an agent <span>&rarr;</span></a>
+      </div>
+      <div class="card" style="--c:var(--automate)">
+        <span class="n">02</span>
+        <h3>Business Process Automation</h3>
+        <p class="prob">A process held together by spreadsheets, email threads, and one person who knows how it actually works.</p>
+        <div class="deliv">&rarr; Process map &amp; failure modes<br>&rarr; Automated pipeline<br>&rarr; Exception handling<br>&rarr; Monitoring &amp; alerting</div>
+        <a class="nx" href="#start">Map a process <span>&rarr;</span></a>
+      </div>
+      <div class="card" style="--c:var(--integrate)">
+        <span class="n">03</span>
+        <h3>Custom Software &amp; Integrations</h3>
+        <p class="prob">Two systems that should talk to each other, and a vendor who says it isn't supported.</p>
+        <div class="deliv">&rarr; Integration architecture<br>&rarr; API clients &amp; webhooks<br>&rarr; Data mapping &amp; reconciliation<br>&rarr; Tests against live sandboxes</div>
+        <a class="nx" href="#start">Describe the gap <span>&rarr;</span></a>
+      </div>
+      <div class="card" style="--c:var(--modernize)">
+        <span class="n">04</span>
+        <h3>AI-Assisted Engineering</h3>
+        <p class="prob">An application that still works but nobody wants to touch, and a team that can't afford to stop shipping to fix it.</p>
+        <div class="deliv">&rarr; Architecture assessment<br>&rarr; Incremental migration plan<br>&rarr; Test coverage first<br>&rarr; Modernized, documented code</div>
+        <a class="nx" href="#start">Assess a system <span>&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">How we work</div>
+      <h2>AI moves fast. Judgment decides where.</h2>
+      <p>Five stages. AI-assisted implementation compresses the middle; experienced engineering judgment governs the parts where being wrong is expensive.</p>
+    </div>
+
+    <div class="proc" id="proc">
+      <div class="ph"><span class="d"></span><span class="n">01</span><h4>Discover</h4><p>Understand the actual problem, the constraints, and what "done" means to you.</p><span class="who hu">HUMAN-LED</span></div>
+      <div class="ph"><span class="d"></span><span class="n">02</span><h4>Architect</h4><p>Decide the shape: data flow, failure modes, security boundaries, what stays manual.</p><span class="who hu">HUMAN-LED</span></div>
+      <div class="ph"><span class="d"></span><span class="n">03</span><h4>Build</h4><p>AI-assisted implementation against the agreed architecture, reviewed every step.</p><span class="who ai">AI-ACCELERATED</span></div>
+      <div class="ph"><span class="d"></span><span class="n">04</span><h4>Validate</h4><p>Tests, evals, edge cases, and a security pass before anything touches production.</p><span class="who ai">AI-ACCELERATED</span></div>
+      <div class="ph"><span class="d"></span><span class="n">05</span><h4>Deliver</h4><p>Deployed, documented, and handed over so your team can maintain it without me.</p><span class="who hu">HUMAN-LED</span></div>
+    </div>
+
+    <div class="gov">
+      <p><strong>Why the split matters.</strong> AI coding assistants are genuinely fast at implementation, and I use them heavily &mdash; that's how a fixed-price engagement at this size is possible at all. What they don't do is decide what should be built, where the security boundary sits, or which failure mode will take your business down at 2am. That part is the job, and it doesn't get delegated.</p>
+    </div>
+  </div>
+</section>
+
+<section id="demos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Capabilities</div>
+      <h2>Three things I get asked to build.</h2>
+      <p>Switch the scenario in the console above, or below, to watch each one run end to end.</p>
+      <div style="margin-top:18px"><span class="note-badge">Illustrative demonstration &mdash; not client work</span></div>
+    </div>
+
+    <div class="con" style="min-height:348px">
+      <div class="con-bar">
+        <span class="dot"></span>
+        <span class="nm" id="conName2">agent &middot; parts-reconciliation</span>
+        <div class="tabs" role="tablist" aria-label="Demonstration scenario">
+          <button class="tab" role="tab" aria-selected="true" data-s="0" data-t="2">OPS</button>
+          <button class="tab" role="tab" aria-selected="false" data-s="1" data-t="2">ENG</button>
+          <button class="tab" role="tab" aria-selected="false" data-s="2" data-t="2">API</button>
+        </div>
+      </div>
+      <div class="con-task"><span class="lab">Task from the client, in their words</span><span id="conTask2"></span></div>
+      <div class="con-steps" id="conSteps2"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Why SmashGlass</div>
+      <h2>You get the person who does the work.</h2>
+    </div>
+    <div class="about-grid">
+      <div style="display:flex; flex-direction:column; gap:18px">
+        <p style="color:var(--mute); line-height:1.65">SmashGlass is a boutique studio, not an agency. There is no bench, no junior team, and no account layer between you and the engineering. You work directly with someone who has run engineering organizations and still writes and ships the code.</p>
+        <p style="color:var(--mute); line-height:1.65">That matters most on the decisions that are expensive to get wrong &mdash; where the security boundary goes, which integration will quietly break under load, what should stay manual because automating it is a bad trade. Those calls come from having shipped and maintained production systems, not from a framework.</p>
+        <p style="color:var(--mute); line-height:1.65">Engagements are fixed-price and scoped up front, typically $1,500&ndash;$5,000 for a first project. If it turns into something larger, we'll both know why.</p>
+      </div>
+      <div class="vals">
+        <div class="val"><span class="i">01</span><div><div class="t">Executive-level technical judgment</div><div class="s">Architecture and trade-off decisions made by someone accountable for them before.</div></div></div>
+        <div class="val"><span class="i">02</span><div><div class="t">Hands-on delivery</div><div class="s">The person scoping your project is the person writing it.</div></div></div>
+        <div class="val"><span class="i">03</span><div><div class="t">Production engineering experience</div><div class="s">Systems that run unattended, recover from failure, and can be maintained by your team.</div></div></div>
+        <div class="val"><span class="i">04</span><div><div class="t">AI agent architecture</div><div class="s">Tool design, approval gates, evals, and run observability &mdash; not a prompt in a loop.</div></div></div>
+        <div class="val"><span class="i">05</span><div><div class="t">Reliability, testing, security</div><div class="s">Test coverage and a security pass are in scope, not an upsell.</div></div></div>
+        <div class="val"><span class="i">06</span><div><div class="t">Direct collaboration</div><div class="s">One channel, one person, straight answers about what's hard.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="start">
+  <div class="wrap ct-grid">
+    <div>
+      <div class="eyebrow">Start a project</div>
+      <h2>Let's build something intelligent.</h2>
+      <p style="color:var(--mute); line-height:1.65; max-width:42ch">Tell me what's slow, breaking, or not getting done. You'll get a straight answer about whether it's worth building and roughly what it costs &mdash; usually within a day.</p>
+      <div class="alt">
+        <a href="#"><span class="k mono">CALL</span> Book a 20-minute discovery call <span>&rarr;</span></a>
+        <a href="mailto:info@smashglass.com"><span class="k mono">EMAIL</span> info@smashglass.com</a>
+        <a href="tel:15127979101"><span class="k mono">PHONE</span> +1 (512) 797-9101</a>
+      </div>
+    </div>
+
+    <form id="inq" novalidate>
+      <div class="fld">
+        <label for="f-type">What kind of project</label>
+        <select id="f-type" name="type">
+          <option>AI agent development</option>
+          <option>Business process automation</option>
+          <option>Custom software or integration</option>
+          <option>Legacy modernization / architecture review</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label for="f-prob">What's the problem</label>
+        <textarea id="f-prob" name="problem" placeholder="The part of your business this is slowing down, and what you've tried so far."></textarea>
+        <span class="hint">Plain English is fine. Technical detail is optional.</span>
+      </div>
+      <div class="two">
+        <div class="fld">
+          <label for="f-budget">Budget range</label>
+          <select id="f-budget" name="budget">
+            <option>$1,500 &ndash; $5,000</option>
+            <option>$5,000 &ndash; $15,000</option>
+            <option>$15,000+</option>
+            <option>Need help sizing it</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="f-how">Preferred contact</label>
+          <select id="f-how" name="contact"><option>Email</option><option>Phone call</option><option>Video call</option></select>
+        </div>
+      </div>
+      <div class="fld">
+        <label for="f-email">Where to reach you</label>
+        <input id="f-email" name="email" type="email" placeholder="you@company.com">
+      </div>
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-pri" type="submit" style="justify-content:center">Send project inquiry <span class="ar">&rarr;</span></button>
+      <div class="ok" id="ok">Thanks &mdash; in the real build this posts to Formspree and you'd get a reply within a day. Nothing was sent from this prototype.</div>
+      <p class="proto">PROTOTYPE &mdash; FORM IS NOT CONNECTED</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap ft">
+    <p>&copy; 2026 SmashGlass, Inc.</p>
+    <p class="mono" style="font-size:.7rem">Design prototype &middot; Direction 04 + 01</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+  /* ================= console scenarios ================= */
+  var SCEN = [
+    { name:"agent &middot; parts-reconciliation",
+      task:"Reconcile yesterday's parts orders against supplier invoices and flag any mismatch over $50.",
+      steps:[
+        ["plan","PLAN","Four steps: pull orders, pull invoices, match on PO, diff line totals."],
+        ["tool","TOOL","<b>dealer_api.orders</b>(date=\"2026-10-27\") &rarr; 142 records"],
+        ["tool","TOOL","<b>supplier.invoices</b>(date=\"2026-10-27\") &rarr; 138 records"],
+        ["step","STEP","Matched 136 on PO number. 6 orders and 2 invoices unmatched."],
+        ["step","STEP","4 line-total mismatches over $50. Largest $412.80 on PO-88412."],
+        ["hold","HOLD","Awaiting your approval before posting adjustments to the ERP."],
+        ["done","DONE","Approved. 4 adjustments posted. Summary emailed to parts@."]
+      ]},
+    { name:"agent &middot; engineering-workflow",
+      task:"The checkout service throws a timeout about once a day. Find it and open a fix.",
+      steps:[
+        ["plan","PLAN","Pull traces for the failing window, isolate the slow span, reproduce in test."],
+        ["tool","TOOL","<b>traces.query</b>(service=\"checkout\", status=\"timeout\") &rarr; 31 spans"],
+        ["step","STEP","All 31 share one span: <b>tax.quote</b> &mdash; p99 at 9.4s, no client timeout set."],
+        ["tool","TOOL","<b>repo.search</b>(\"tax.quote\") &rarr; 1 call site, no timeout, no retry"],
+        ["step","STEP","Wrote a failing test reproducing the hang. Patch adds 2s timeout + 1 retry."],
+        ["hold","HOLD","Tests green. Awaiting review before opening the PR."],
+        ["done","DONE","Approved. PR #418 opened with test, patch, and trace evidence."]
+      ]},
+    { name:"agent &middot; integration-pipeline",
+      task:"Every new order in the shop needs to reach our accounting system without anyone retyping it.",
+      steps:[
+        ["plan","PLAN","Map both schemas, build the transform, make it idempotent, handle failures."],
+        ["tool","TOOL","<b>shop.schema</b>() &rarr; 24 fields &middot; <b>books.schema</b>() &rarr; 19 fields"],
+        ["step","STEP","18 fields map directly. 3 need transform. 3 have no source &mdash; flagged."],
+        ["step","STEP","Keyed on order ID so replays are safe. Failures queue, they don't drop."],
+        ["tool","TOOL","<b>pipeline.test</b>(sample=200) &rarr; 200 posted, 0 duplicates, 0 lost"],
+        ["hold","HOLD","3 unmapped fields need a business decision before go-live."],
+        ["done","DONE","Resolved. Pipeline live, 1,400 orders synced, alerting on the queue."]
+      ]}
+  ];
+
+  function Console(nameEl, taskEl, stepsEl){
+    var self = this, timer = null, i = 0, els = [], cur = -1;
+    this.load = function(idx){
+      if(idx === cur) return;
+      cur = idx;
+      clearTimeout(timer);
+      var sc = SCEN[idx];
+      nameEl.innerHTML = sc.name;
+      taskEl.textContent = sc.task;
+      stepsEl.innerHTML = "";
+      els = sc.steps.map(function(st){
+        var d = document.createElement("div");
+        d.className = "step " + st[0];
+        d.innerHTML = '<span class="k ' + st[0] + '">' + st[1] + '</span><span class="v">' + st[2] + '</span>';
+        stepsEl.appendChild(d);
+        return d;
+      });
+      i = 0;
+      if(reduce){ els.forEach(function(e){ e.classList.add("on"); }); return; }
+      timer = setTimeout(tick, 550);
+    };
+    function clearCaret(){ var c = stepsEl.querySelector(".caret"); if(c) c.parentNode.removeChild(c); }
+    function tick(){
+      if(i >= els.length){
+        timer = setTimeout(function(){
+          clearCaret();
+          els.forEach(function(e){ e.classList.remove("on"); });
+          i = 0; timer = setTimeout(tick, 800);
+        }, 3800);
+        return;
+      }
+      clearCaret();
+      els[i].classList.add("on");
+      var car = document.createElement("span");
+      car.className = "caret";
+      els[i].querySelector(".v").appendChild(car);
+      var kind = SCEN[cur].steps[i][0];
+      var delay = kind === "hold" ? 2100 : (kind === "plan" ? 1250 : 1000);
+      i++;
+      timer = setTimeout(tick, delay);
+    }
+  }
+
+  var c1 = new Console(document.getElementById("conName"), document.getElementById("conTask"), document.getElementById("conSteps"));
+  var c2 = new Console(document.getElementById("conName2"), document.getElementById("conTask2"), document.getElementById("conSteps2"));
+  c1.load(0); c2.load(0);
+
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(btn){
+    btn.addEventListener("click", function(){
+      var group = btn.parentElement;
+      Array.prototype.forEach.call(group.querySelectorAll(".tab"), function(b){ b.setAttribute("aria-selected","false"); });
+      btn.setAttribute("aria-selected","true");
+      (btn.dataset.t === "2" ? c2 : c1).load(+btn.dataset.s);
+    });
+  });
+
+  /* ================= prism ================= */
+  function prismScene(cv, markMode){
+    var ctx = cv.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2), d = {w:0,h:0};
+    var COLORS = ["#4F7DFF","#22D3A5","#FFB020","#FF5C7A"];
+    var LABELS = ["AGENTS","AUTOMATION","INTEGRATIONS","MODERNIZATION"];
+    var py = 0.5, tpy = 0.5, rot = 0, t = 0;
+
+    function size(){
+      var r = cv.getBoundingClientRect();
+      cv.width = Math.max(1, Math.round(r.width*dpr)); cv.height = Math.max(1, Math.round(r.height*dpr));
+      ctx.setTransform(dpr,0,0,dpr,0,0); d.w = r.width; d.h = r.height;
+    }
+    size(); window.addEventListener("resize", size);
+
+    if(!markMode){
+      cv.parentElement.addEventListener("pointermove", function(e){
+        var r = cv.getBoundingClientRect();
+        tpy = clamp((e.clientY - r.top)/r.height, 0.18, 0.82);
+      });
+      cv.parentElement.addEventListener("pointerleave", function(){ tpy = 0.5; });
+    }
+
+    function tri(cx, cy, rad, a){
+      ctx.beginPath();
+      for(var i=0;i<3;i++){
+        var ang = a + i*Math.PI*2/3 - Math.PI/2;
+        var x = cx + Math.cos(ang)*rad, y = cy + Math.sin(ang)*rad*1.06;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+    }
+
+    function draw(){
+      var w = d.w, h = d.h;
+      if(!w || !h) return;
+      py += (tpy - py)*0.07;
+      ctx.clearRect(0,0,w,h);
+
+      if(!markMode){
+        var bg = ctx.createRadialGradient(w*0.56,h*0.5,0,w*0.56,h*0.5,w*0.7);
+        bg.addColorStop(0,"#0F1219"); bg.addColorStop(1,"#07080B");
+        ctx.fillStyle = bg; ctx.fillRect(0,0,w,h);
+      }
+
+      var cx = markMode ? w*0.5 : w*0.42, cy = h*0.5;
+      var rad = markMode ? Math.min(w,h)*0.34 : Math.min(w,h)*0.21;
+      var sx = markMode ? -w : -w*0.08, sy = h*py;
+
+      ctx.globalCompositeOperation = "lighter";
+      var ang0 = Math.atan2(cy - sy, cx - sx);
+
+      if(!markMode){
+        for(var p=0;p<3;p++){
+          ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(cx,cy);
+          ctx.strokeStyle = "rgba(226,232,240," + (0.05 + p*0.05) + ")";
+          ctx.lineWidth = 9 - p*3; ctx.stroke();
+        }
+      }
+
+      for(var i=0;i<4;i++){
+        var spread = (i-1.5)*(markMode?0.22:0.125) + Math.sin(t*0.55+i)*0.005;
+        var a = ang0 + spread;
+        var len = markMode ? w*0.55 : w;
+        var ex = cx + Math.cos(a)*len, ey = cy + Math.sin(a)*len;
+        var g = ctx.createLinearGradient(cx,cy,ex,ey);
+        g.addColorStop(0,COLORS[i]); g.addColorStop(0.5,COLORS[i]+"55"); g.addColorStop(1,COLORS[i]+"00");
+        for(var q=0;q<2;q++){
+          ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey);
+          ctx.strokeStyle = g; ctx.globalAlpha = q===0 ? 0.28 : 0.85;
+          ctx.lineWidth = q===0 ? (markMode?4:11) : (markMode?1:1.6);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+
+        if(!markMode){
+          var lx = cx + Math.cos(a)*(w*0.42), ly = cy + Math.sin(a)*(w*0.42);
+          if(ly > 14 && ly < h-10){
+            ctx.globalCompositeOperation = "source-over";
+            ctx.font = "500 9px 'JetBrains Mono', monospace";
+            ctx.fillStyle = COLORS[i]+"DD"; ctx.textAlign = "right";
+            ctx.fillText(LABELS[i], Math.min(lx, w-16), ly+3);
+            ctx.globalCompositeOperation = "lighter";
+          }
+        }
+      }
+      ctx.globalCompositeOperation = "source-over";
+
+      rot += reduce ? 0 : 0.0022;
+      tri(cx, cy, rad, rot);
+      var pg = ctx.createLinearGradient(cx-rad,cy-rad,cx+rad,cy+rad);
+      pg.addColorStop(0,"rgba(160,190,230,0.18)");
+      pg.addColorStop(0.5,"rgba(120,150,200,0.06)");
+      pg.addColorStop(1,"rgba(200,220,255,0.20)");
+      ctx.fillStyle = pg; ctx.fill();
+      ctx.strokeStyle = "rgba(205,225,255,0.55)"; ctx.lineWidth = markMode?1.4:1.1; ctx.stroke();
+
+      if(!markMode){
+        tri(cx, cy, rad*0.55, -rot*1.5);
+        ctx.strokeStyle = "rgba(205,225,255,0.16)"; ctx.lineWidth = 0.8; ctx.stroke();
+      }
+      t += 0.016;
+    }
+
+    function vis(){ var r = cv.getBoundingClientRect(); return r.bottom > -150 && r.top < innerHeight + 150; }
+    function loop(){ if(vis()) draw(); requestAnimationFrame(loop); }
+    if(reduce){ setTimeout(draw, 60); } else { loop(); }
+  }
+  prismScene(document.getElementById("prism"), false);
+  prismScene(document.getElementById("mark"), true);
+
+  /* ================= process reveal ================= */
+  var phases = document.querySelectorAll("#proc .ph");
+  if("IntersectionObserver" in window && !reduce){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          var idx = Array.prototype.indexOf.call(phases, e.target);
+          setTimeout(function(){ e.target.classList.add("lit"); }, idx*110);
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.4});
+    Array.prototype.forEach.call(phases, function(p){ io.observe(p); });
+  } else {
+    Array.prototype.forEach.call(phases, function(p){ p.classList.add("lit"); });
+  }
+
+  /* ================= inert form ================= */
+  document.getElementById("inq").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("ok").classList.add("show");
+  });
+})();
+</script>

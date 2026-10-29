@@ -1,0 +1,83 @@
+---
+import PrismScene from './PrismScene.astro';
+import { SERVICES } from '../data/scenarios';
+---
+<section id="build" class="section-rule">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">What we build</p>
+      <h2 class="serif" style="font-size: clamp(2rem, 4.2vw, 3rem)">Complexity in. Clarity out.</h2>
+      <p>One engagement, four kinds of work. Most projects start in one of these and pull in a second.</p>
+    </div>
+
+    <div class="prism-stage">
+      <PrismScene label="A beam of light entering a glass prism and leaving as four separate coloured rays, one for each service line." />
+    </div>
+
+    <div class="svc">
+      {SERVICES.map((s) => (
+        <article class="card" style={`--c: var(--color-${s.color})`}>
+          <span class="n">{s.n}</span>
+          <h3>{s.title}</h3>
+          <p class="prob">{s.problem}</p>
+          <ul class="deliv">
+            {s.deliverables.map((d) => <li>{d}</li>)}
+          </ul>
+          <a class="nx" href="#start">{s.next} <span aria-hidden="true">&rarr;</span></a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .prism-stage {
+    position: relative; height: clamp(220px, 30vw, 330px);
+    margin-bottom: -1px; border-radius: 5px 5px 0 0; overflow: hidden;
+    background: var(--color-ink-2);
+    border: 1px solid var(--color-rule); border-bottom: none;
+  }
+  .svc {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--color-rule); border-radius: 0 0 5px 5px; overflow: hidden;
+  }
+  @media (max-width: 980px) { .svc { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .svc { grid-template-columns: 1fr; } }
+
+  .card {
+    padding: 26px 22px 24px; background: var(--color-ink-2);
+    border-right: 1px solid var(--color-rule);
+    display: flex; flex-direction: column; gap: 12px;
+    position: relative; transition: background .22s;
+  }
+  .card:last-child { border-right: none; }
+  .card::before {
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 2px;
+    background: var(--c); opacity: 0.8;
+  }
+  .card:hover { background: var(--color-graphite); }
+
+  @media (max-width: 980px) {
+    .card:nth-child(2) { border-right: none; }
+    .card:nth-child(1), .card:nth-child(2) { border-bottom: 1px solid var(--color-rule); }
+  }
+  @media (max-width: 560px) {
+    .card { border-right: none; border-bottom: 1px solid var(--color-rule); }
+    .card:last-child { border-bottom: none; }
+  }
+
+  .card .n { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--c); }
+  .card h3 { font-size: 1.04rem; letter-spacing: -0.015em; }
+  .card .prob { font-size: 0.845rem; color: var(--color-mute); line-height: 1.55; }
+  .card .deliv {
+    font-family: var(--font-mono); font-size: 0.66rem; line-height: 1.75;
+    color: var(--color-mute-2); padding-top: 10px;
+    border-top: 1px solid var(--color-rule); margin-top: auto;
+    list-style: none; padding-left: 0;
+  }
+  .card .deliv li::before { content: '→ '; }
+  .card .nx {
+    font-size: 0.78rem; color: var(--c); font-weight: 500;
+    display: inline-flex; gap: 6px; align-items: center; text-decoration: none;
+  }
+</style>

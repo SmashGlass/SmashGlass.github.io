@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SmashGlass design tokens — Direction 01 "Refraction"
+   Committed single-theme dark. Every colour painted explicitly.
+   ============================================================ */
+@theme {
+  --color-ink:        #07080B;
+  --color-ink-2:      #0C0E13;
+  --color-graphite:   #14161C;
+  --color-graphite-2: #1B1F27;
+  --color-bone:       #EDEEF2;
+  --color-mute:       #8A919E;
+  --color-mute-2:     #5C6472;
+  --color-rule:       #21252E;
+  --color-rule-2:     #2C323D;
+
+  /* The spectrum. Doubles as the agent console's state colours:
+     agents=plan, automate=done, integrate=awaiting-human. */
+  --color-agents:     #4F7DFF;
+  --color-automate:   #22D3A5;
+  --color-integrate:  #FFB020;
+  --color-modernize:  #FF5C7A;
+
+  --font-display: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif:   "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-body:    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-agents);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection { background: var(--color-agents); color: #fff; }
+}
+
+@layer components {
+  .wrap { max-width: 1180px; margin-inline: auto; padding-inline: 32px; }
+  @media (max-width: 640px) { .wrap { padding-inline: 20px; } }
+
+  .serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.005em; }
+  .mono  { font-family: var(--font-mono); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-mute-2);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
+    padding: 12px 20px; border-radius: 3px; border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .btn-pri { background: var(--color-bone); color: var(--color-ink); }
+  .btn-pri:hover { background: #fff; transform: translateY(-1px); }
+  .btn-sec { border-color: var(--color-rule-2); color: var(--color-bone); }
+  .btn-sec:hover { border-color: var(--color-mute); transform: translateY(-1px); }
+  .btn .ar { transition: transform .18s ease; }
+  .btn:hover .ar { transform: translateX(3px); }
+
+  .section-rule { border-bottom: 1px solid var(--color-rule); }
+
+  .sec-head { max-width: 62ch; margin-bottom: clamp(36px, 5vw, 56px); }
+  .sec-head h2 { font-size: clamp(1.85rem, 3.8vw, 2.85rem); margin: 14px 0 16px; }
+  .sec-head p  { color: var(--color-mute); font-size: 1.03rem; line-height: 1.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================================
+   Agent console (Direction 04). Global because it is rendered
+   by a React island, which Astro's scoped styles do not reach.
+   ============================================================ */
+@layer components {
+  .con {
+    background: var(--color-graphite);
+    border: 1px solid var(--color-rule-2);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .con-bar {
+    display: flex; align-items: center; gap: 9px;
+    padding: 11px 14px; border-bottom: 1px solid var(--color-rule); flex: 0 0 auto;
+  }
+  .con-bar .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-automate); }
+  .con-bar .nm {
+    font-family: var(--font-mono); font-size: 0.63rem;
+    letter-spacing: 0.13em; text-transform: uppercase; color: var(--color-mute-2);
+  }
+  .con-bar .tabs { margin-left: auto; display: flex; gap: 4px; }
+  .con-bar .tab {
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em;
+    padding: 4px 9px; border-radius: 2px; color: var(--color-mute-2);
+    cursor: pointer; border: 1px solid transparent; background: none; transition: all .16s;
+  }
+  .con-bar .tab:hover { color: var(--color-mute); }
+  .con-bar .tab[aria-selected="true"] {
+    color: var(--color-bone); border-color: var(--color-rule-2); background: var(--color-graphite-2);
+  }
+  .con-task {
+    padding: 14px; border-bottom: 1px solid var(--color-rule);
+    font-size: 0.83rem; line-height: 1.5; color: #C3CAD6; flex: 0 0 auto;
+  }
+  .con-task .lab {
+    display: block; font-family: var(--font-mono); font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-mute-2); margin-bottom: 7px;
+  }
+  .con-steps { padding: 14px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 auto; }
+
+  .step {
+    display: grid; grid-template-columns: 58px 1fr; gap: 11px; align-items: start;
+    opacity: 0; transform: translateY(5px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .step.on { opacity: 1; transform: none; }
+  .step .k {
+    font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.1em;
+    padding: 3px 0; border-radius: 2px; text-align: center; margin-top: 1px; font-weight: 500;
+  }
+  .step .v { font-family: var(--font-mono); font-size: 0.695rem; line-height: 1.55; color: #98A1AF; }
+  .step .v b { color: #D5DBE4; font-weight: 400; }
+
+  .k.plan { background: rgb(79 125 255 / 0.16); color: #88A8FF; }
+  .k.tool, .k.step { background: rgb(255 255 255 / 0.065); color: #78808E; }
+  .k.hold { background: rgb(255 176 32 / 0.16); color: var(--color-integrate); }
+  .k.done { background: rgb(34 211 165 / 0.16); color: var(--color-automate); }
+  .step.hold .v { color: var(--color-integrate); }
+  .step.done .v { color: #5FDDB8; }
+
+  .caret {
+    display: inline-block; width: 6px; height: 11px; background: var(--color-automate);
+    vertical-align: -1px; margin-left: 3px; animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .note-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--color-integrate);
+    border: 1px solid rgb(255 176 32 / 0.3); background: rgb(255 176 32 / 0.07);
+    padding: 5px 10px; border-radius: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step { opacity: 1 !important; transform: none !important; }
+  .caret { display: none; }
+}

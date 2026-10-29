@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="wrap ft">
+    <p>&copy; {year} SmashGlass, Inc.</p>
+    <p class="mono contact">
+      <a href="mailto:info@smashglass.com">info@smashglass.com</a>
+      <span aria-hidden="true">·</span>
+      <a href="tel:+15127979101">+1 (512) 797-9101</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer { padding: 36px 0; border-top: 1px solid var(--color-rule); }
+  .ft { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .ft p { font-size: 0.78rem; color: var(--color-mute-2); }
+  .contact { display: flex; gap: 10px; font-size: 0.74rem; }
+  .contact a { color: var(--color-mute-2); text-decoration: none; }
+  .contact a:hover { color: var(--color-bone); }
+</style>
