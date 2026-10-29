@@ -1,0 +1,12 @@
+{
+  "name": "smashglass-inquiry-api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": { "test": "node --experimental-strip-types api/inquiry.test.ts", "typecheck": "tsc --noEmit" },
+  "description": "Serverless endpoint that validates smashglass.com project inquiries and emails them.",
+  "devDependencies": {
+    "@vercel/node": "^5.3.26",
+    "typescript": "^5.9.3"
+  }
+}
