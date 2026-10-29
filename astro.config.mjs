@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://www.smashglass.com',
+  site: 'https://smashglass.com',
   integrations: [preact({ compat: true }), sitemap()],
   vite: { plugins: [tailwindcss()] },
   build: { inlineStylesheets: 'auto' },
